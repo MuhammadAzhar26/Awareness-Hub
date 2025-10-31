@@ -1,0 +1,50 @@
+'[{"id":"a","text":"wireshark GUI"},{"id":"b","text":"tshark with ring buffer"},{"id":"c","text":"dumpcap with multiple files"},{"id":"d","text":"tcpdump with filters"}]'::jsonb,
+'c', 'advanced', 'dumpcap is the most efficient capture engine with minimal overhead, and multiple files prevent single large files.', 15, 11),
+
+(1, 'You are analyzing a network attack where attackers used fragmented packets. Which Wireshark feature reassembles them?', 
+'[{"id":"a","text":"Edit > Preferences > Protocols"},{"id":"b","text":"Analyze > Expert Information"},{"id":"c","text":"IP reassembly (automatic)"},{"id":"d","text":"Statistics > IPv4 Statistics"}]'::jsonb,
+'c', 'advanced', 'Wireshark automatically reassembles fragmented IP packets when "Reassemble fragmented IP datagrams" is enabled in preferences.', 15, 12);
+
+-- ===================================
+-- NMAP SCANNING TECHNIQUES - Stage 1 (ID: 7)
+-- ===================================
+
+INSERT INTO stage_questions (tool_stage_id, question_text, options, correct_option, difficulty, explanation, points, order_index) VALUES
+
+(7, 'Which flag performs a TCP SYN scan in Nmap?', 
+'[{"id":"a","text":"-sS"},{"id":"b","text":"-sT"},{"id":"c","text":"-sU"},{"id":"d","text":"-sA"}]'::jsonb,
+'a', 'basic', 'The -sS flag performs a SYN scan, also known as half-open scanning.', 10, 1),
+
+(7, 'What does the -sV flag do in Nmap?', 
+'[{"id":"a","text":"Scan vulnerabilities"},{"id":"b","text":"Version detection"},{"id":"c","text":"Verbose output"},{"id":"d","text":"Verify hosts"}]'::jsonb,
+'b', 'basic', 'The -sV flag enables service version detection to identify running software versions.', 10, 2),
+
+(7, 'Which flag is used for UDP scanning?', 
+'[{"id":"a","text":"-sU"},{"id":"b","text":"-sT"},{"id":"c","text":"-sS"},{"id":"d","text":"-sP"}]'::jsonb,
+'a', 'basic', 'The -sU flag performs UDP port scanning.', 10, 3),
+
+(7, 'What is the default TCP port scan range in Nmap?', 
+'[{"id":"a","text":"1-65535"},{"id":"b","text":"1-1024"},{"id":"c","text":"1-1000"},{"id":"d","text":"Top 1000 ports"}]'::jsonb,
+'d', 'basic', 'By default, Nmap scans the top 1000 most common ports, not all 65535.', 10, 4),
+
+(7, 'Which flag increases Nmap verbosity?', 
+'[{"id":"a","text":"-v"},{"id":"b","text":"-vv"},{"id":"c","text":"-d"},{"id":"d","text":"Both A and B"}]'::jsonb,
+'d', 'basic', 'Both -v and -vv increase verbosity, with -vv providing more detailed output.', 10, 5),
+
+(7, 'How do you scan only ports 80, 443, and 8080?', 
+'[{"id":"a","text":"-p 80,443,8080"},{"id":"b","text":"--ports 80,443,8080"},{"id":"c","text":"-ports 80-8080"},{"id":"d","text":"-p 80 443 8080"}]'::jsonb,
+'a', 'basic', 'The -p flag with comma-separated values scans specific ports.', 10, 6),
+
+(7, 'Which flag enables OS detection?', 
+'[{"id":"a","text":"-O"},{"id":"b","text":"--os"},{"id":"c","text":"-sO"},{"id":"d","text":"--detect-os"}]'::jsonb,
+'a', 'basic', 'The -O flag attempts to detect the target operating system.', 10, 7),
+
+(7, 'What command scans all 65535 ports?', 
+'[{"id":"a","text":"nmap -p- target"},{"id":"b","text":"nmap -p 1-65535 target"},{"id":"c","text":"nmap --all-ports target"},{"id":"d","text":"Both A and B"}]'::jsonb,
+'d', 'basic', 'Both -p- and -p 1-65535 scan all TCP ports.', 10, 8),
+
+(7, 'You are performing stealth reconnaissance on a hardened target. Which scan type would be MOST effective?', 
+'[{"id":"a","text":"-sS (SYN scan)"},{"id":"b","text":"-sN (NULL scan)"},{"id":"c","text":"-sF (FIN scan)"},{"id":"d","text":"-sX (Xmas scan)"}]'::jsonb,
+'c', 'advanced', 'FIN scans can bypass some stateless firewalls and IDS systems that don''t inspect FIN packets as thoroughly.', 15, 9),
+
+(7, 'You need to identify vulnerable services on a network. What is the BEST Nmap command strategy?', 

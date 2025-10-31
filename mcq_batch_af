@@ -1,0 +1,50 @@
+'[{"id":"a","text":"Keyword Search"},{"id":"b","text":"File Search tool"},{"id":"c","text":"Both A and B"},{"id":"d","text":"Regular expressions only"}]'::jsonb,
+'c', 'basic', 'Both Keyword Search (for content) and File Search (for names) help locate specific files.', 10, 7),
+
+(31, 'What format are Autopsy reports generated in?', 
+'[{"id":"a","text":"HTML"},{"id":"b","text":"PDF"},{"id":"c","text":"Excel"},{"id":"d","text":"All of the above"}]'::jsonb,
+'a', 'basic', 'Autopsy generates HTML reports with interactive navigation and detailed findings.', 10, 8),
+
+(31, 'You are analyzing evidence from a suspected data breach. Which Autopsy module identifies recently accessed files?', 
+'[{"id":"a","text":"Recent Activity"},{"id":"b","text":"File Type Analysis"},{"id":"c","text":"Hash Lookup"},{"id":"d","text":"Keyword Search"}]'::jsonb,
+'a', 'advanced', 'The Recent Activity module identifies recently opened documents, accessed folders, and user activity.', 15, 9),
+
+(31, 'During investigation, you need to identify when files were copied to a USB drive. Which artifact provides this information?', 
+'[{"id":"a","text":"USB Device Artifacts"},{"id":"b","text":"Windows LNK files"},{"id":"c","text":"Registry analysis"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'advanced', 'USB artifacts, LNK files, and Registry entries all provide evidence of USB device usage and file transfers.', 15, 10),
+
+(31, 'You found encrypted files during forensic analysis. What is the BEST Autopsy approach?', 
+'[{"id":"a","text":"Attempt password cracking"},{"id":"b","text":"Look for encryption keys in memory/registry"},{"id":"c","text":"Analyze file metadata and access patterns"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'advanced', 'A comprehensive approach includes key recovery, metadata analysis, and access pattern investigation.', 15, 11),
+
+(31, 'You need to establish chain of custody. Which Autopsy feature helps document evidence handling?', 
+'[{"id":"a","text":"Case notes and tags"},{"id":"b","text":"Automated logging"},{"id":"c","text":"Report generation with metadata"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'advanced', 'Autopsy''s case management, logging, and reporting features all support chain of custody documentation.', 15, 12);
+
+-- ===================================
+-- VOLATILITY FRAMEWORK - Stage 1 (ID: 35)
+-- ===================================
+
+INSERT INTO stage_questions (tool_stage_id, question_text, options, correct_option, difficulty, explanation, points, order_index) VALUES
+
+(35, 'What type of forensics does Volatility specialize in?', 
+'[{"id":"a","text":"Disk forensics"},{"id":"b","text":"Memory forensics"},{"id":"c","text":"Network forensics"},{"id":"d","text":"Mobile forensics"}]'::jsonb,
+'b', 'basic', 'Volatility is a memory forensics framework for analyzing RAM dumps.', 10, 1),
+
+(35, 'Which command lists running processes?', 
+'[{"id":"a","text":"pslist"},{"id":"b","text":"processes"},{"id":"c","text":"tasklist"},{"id":"d","text":"procs"}]'::jsonb,
+'a', 'basic', 'The pslist plugin displays running processes from memory.', 10, 2),
+
+(35, 'What flag specifies the memory dump file?', 
+'[{"id":"a","text":"-f"},{"id":"b","text":"--file"},{"id":"c","text":"-m"},{"id":"d","text":"--memory"}]'::jsonb,
+'a', 'basic', 'The -f flag specifies the path to the memory dump file.', 10, 3),
+
+(35, 'Which plugin identifies network connections?', 
+'[{"id":"a","text":"netscan"},{"id":"b","text":"connections"},{"id":"c","text":"netstat"},{"id":"d","text":"network"}]'::jsonb,
+'a', 'basic', 'The netscan plugin scans for network connection artifacts in memory.', 10, 4),
+
+(35, 'What command shows loaded kernel modules?', 
+'[{"id":"a","text":"modules"},{"id":"b","text":"lsmod"},{"id":"c","text":"driverscan"},{"id":"d","text":"Both A and B"}]'::jsonb,
+'a', 'basic', 'The modules plugin lists loaded kernel modules from memory.', 10, 5),
+
+(35, 'Which plugin analyzes browser history?', 

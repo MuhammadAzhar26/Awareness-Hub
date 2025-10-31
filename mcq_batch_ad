@@ -1,0 +1,50 @@
+'[{"id":"a","text":"auxiliary/scanner/portscan/tcp"},{"id":"b","text":"post/windows/manage/autoroute"},{"id":"c","text":"exploit/multi/handler"},{"id":"d","text":"auxiliary/admin/smb/psexec"}]'::jsonb,
+'b', 'advanced', 'The autoroute module allows pivoting through a compromised host to access internal network segments.', 15, 9),
+
+(12, 'During post-exploitation, you need to maintain persistence. Which Meterpreter command is MOST effective?', 
+'[{"id":"a","text":"run persistence -X"},{"id":"b","text":"run scheduleme"},{"id":"c","text":"exploit/windows/local/persistence"},{"id":"d","text":"Both A and C"}]'::jsonb,
+'d', 'advanced', 'Both the persistence script and persistence exploit module can establish persistent access mechanisms.', 15, 10),
+
+(12, 'You are exploiting a web application. Which Metasploit feature would help automate the exploitation process?', 
+'[{"id":"a","text":"AutoPwn"},{"id":"b","text":"Auxiliary modules"},{"id":"c","text":"Resource scripts"},{"id":"d","text":"Meterpreter"}]'::jsonb,
+'c', 'advanced', 'Resource scripts (.rc files) automate sequences of Metasploit commands for repeatable exploitation.', 15, 11),
+
+(12, 'You have a Meterpreter session but need to bypass AV. What technique is recommended?', 
+'[{"id":"a","text":"Use encoder modules"},{"id":"b","text":"Migrate to trusted process"},{"id":"c","text":"Use execute -H -f"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'advanced', 'Encoding payloads, process migration, and hidden execution all help evade antivirus detection.', 15, 12);
+
+-- ===================================
+-- BURP SUITE PRO - Stage 1 (ID: 17)
+-- ===================================
+
+INSERT INTO stage_questions (tool_stage_id, question_text, options, correct_option, difficulty, explanation, points, order_index) VALUES
+
+(17, 'What is the default proxy port for Burp Suite?', 
+'[{"id":"a","text":"8080"},{"id":"b","text":"8888"},{"id":"c","text":"9090"},{"id":"d","text":"3128"}]'::jsonb,
+'a', 'basic', 'Burp Suite uses port 8080 as the default proxy listener.', 10, 1),
+
+(17, 'Which Burp tool intercepts HTTP requests and responses?', 
+'[{"id":"a","text":"Proxy"},{"id":"b","text":"Interceptor"},{"id":"c","text":"Scanner"},{"id":"d","text":"Spider"}]'::jsonb,
+'a', 'basic', 'The Proxy tool intercepts and allows modification of HTTP/HTTPS traffic.', 10, 2),
+
+(17, 'What is the Intruder tool used for?', 
+'[{"id":"a","text":"Automated attacks"},{"id":"b","text":"Fuzzing inputs"},{"id":"c","text":"Brute force testing"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'basic', 'Intruder performs automated customized attacks including fuzzing and brute forcing.', 10, 3),
+
+(17, 'Which tab shows the raw HTTP request and response?', 
+'[{"id":"a","text":"Raw"},{"id":"b","text":"HTTP"},{"id":"c","text":"Message"},{"id":"d","text":"Details"}]'::jsonb,
+'a', 'basic', 'The Raw tab displays unprocessed HTTP messages in their original format.', 10, 4),
+
+(17, 'What is the Repeater tool used for?', 
+'[{"id":"a","text":"Repeating requests automatically"},{"id":"b","text":"Manual request manipulation and replay"},{"id":"c","text":"Duplicating sessions"},{"id":"d","text":"Retrying failed requests"}]'::jsonb,
+'b', 'basic', 'Repeater allows manual modification and resubmission of individual HTTP requests.', 10, 5),
+
+(17, 'How do you enable SSL/TLS interception in Burp?', 
+'[{"id":"a","text":"Install Burp CA certificate"},{"id":"b","text":"Enable HTTPS in settings"},{"id":"c","text":"Use --ssl flag"},{"id":"d","text":"Configure SSL proxy"}]'::jsonb,
+'a', 'basic', 'Installing Burp''s CA certificate in the browser allows interception of HTTPS traffic.', 10, 6),
+
+(17, 'Which Burp extension is commonly used for SQL injection analysis?', 
+'[{"id":"a","text":"SQLiPy"},{"id":"b","text":"SQLMap Integration"},{"id":"c","text":"Active Scan++"},{"id":"d","text":"CO2"}]'::jsonb,
+'b', 'basic', 'The SQLMap Integration extension allows using SQLMap directly from Burp Suite.', 10, 7),
+
+(17, 'What does the Spider tool do?', 

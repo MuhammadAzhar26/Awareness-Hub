@@ -1,0 +1,26 @@
+'[{"id":"a","text":"iehistory"},{"id":"b","text":"chromehistory"},{"id":"c","text":"firefoxhistory"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'basic', 'Volatility has plugins for extracting history from IE, Chrome, and Firefox.', 10, 6),
+
+(35, 'What does the imageinfo command do?', 
+'[{"id":"a","text":"Shows image files"},{"id":"b","text":"Identifies memory dump profile"},{"id":"c","text":"Displays image metadata"},{"id":"d","text":"Analyzes picture files"}]'::jsonb,
+'b', 'basic', 'The imageinfo command identifies the operating system profile for the memory dump.', 10, 7),
+
+(35, 'Which plugin dumps process memory?', 
+'[{"id":"a","text":"procdump"},{"id":"b","text":"memdump"},{"id":"c","text":"dumpmem"},{"id":"d","text":"processdump"}]'::jsonb,
+'b', 'basic', 'The memdump plugin extracts the memory contents of a specific process.', 10, 8),
+
+(35, 'You are investigating malware persistence mechanisms. Which Volatility plugin identifies auto-start locations?', 
+'[{"id":"a","text":"autoruns"},{"id":"b","text":"svcscan"},{"id":"c","text":"Both A and B"},{"id":"d","text":"shimcache"}]'::jsonb,
+'c', 'advanced', 'Both autoruns (for registry persistence) and svcscan (for services) help identify persistence mechanisms.', 15, 9),
+
+(35, 'You need to find decrypted passwords in memory. Which approach is MOST effective?', 
+'[{"id":"a","text":"hashdump for password hashes"},{"id":"b","text":"mimikatz plugin for credentials"},{"id":"c","text":"strings | grep password"},{"id":"d","text":"Both A and B"}]'::jsonb,
+'d', 'advanced', 'Both hashdump (for SAM hashes) and mimikatz plugin (for plaintext credentials) extract password data.', 15, 10),
+
+(35, 'During rootkit analysis, you suspect DKOM (Direct Kernel Object Manipulation). Which technique detects hidden processes?', 
+'[{"id":"a","text":"Compare pslist vs psscan"},{"id":"b","text":"Use psxview for cross-validation"},{"id":"c","text":"Check for unlinked EPROCESS blocks"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'advanced', 'All techniques help identify processes hidden by DKOM: cross-referencing plugins, psxview validation, and EPROCESS scanning.', 15, 11),
+
+(35, 'You are analyzing a memory dump for evidence of code injection. Which Volatility plugins are MOST relevant?', 
+'[{"id":"a","text":"malfind"},{"id":"b","text":"ldrmodules"},{"id":"c","text":"hollowfind"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'advanced', 'malfind detects injected code, ldrmodules finds unlinked DLLs, and hollowfind identifies process hollowing.', 15, 12);

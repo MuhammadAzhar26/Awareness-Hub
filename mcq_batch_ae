@@ -1,0 +1,50 @@
+'[{"id":"a","text":"Analyzes spiders"},{"id":"b","text":"Crawls application content"},{"id":"c","text":"Tests for vulnerabilities"},{"id":"d","text":"Maps network topology"}]'::jsonb,
+'b', 'basic', 'Spider automatically crawls web applications to discover content and map structure.', 10, 8),
+
+(17, 'You are testing authentication mechanisms. Which Burp tool is MOST appropriate for testing login bypass vulnerabilities?', 
+'[{"id":"a","text":"Sequencer"},{"id":"b","text":"Intruder with username/password lists"},{"id":"c","text":"Repeater with modified requests"},{"id":"d","text":"Both B and C"}]'::jsonb,
+'d', 'advanced', 'Both Intruder (for automated testing) and Repeater (for manual manipulation) are effective for authentication testing.', 15, 9),
+
+(17, 'You need to test for parameter tampering. What is the BEST Burp Suite workflow?', 
+'[{"id":"a","text":"Intercept request, modify parameters, forward"},{"id":"b","text":"Use Intruder with payload positions on parameters"},{"id":"c","text":"Send to Repeater and manually test variations"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'advanced', 'Comprehensive parameter testing uses Proxy interception, Intruder automation, and Repeater for manual testing.', 15, 10),
+
+(17, 'During a pentest, you need to fuzz a JSON API. What Burp Intruder attack type is most suitable?', 
+'[{"id":"a","text":"Sniper"},{"id":"b","text":"Battering ram"},{"id":"c","text":"Pitchfork"},{"id":"d","text":"Cluster bomb"}]'::jsonb,
+'a', 'advanced', 'Sniper attack type tests each payload position independently, ideal for methodical JSON field fuzzing.', 15, 11),
+
+(17, 'You discovered a potential session fixation vulnerability. Which Burp tool helps analyze session token randomness?', 
+'[{"id":"a","text":"Sequencer"},{"id":"b","text":"Comparer"},{"id":"c","text":"Decoder"},{"id":"d","text":"Intruder"}]'::jsonb,
+'a', 'advanced', 'Sequencer performs statistical analysis of session tokens to identify weak randomness.', 15, 12);
+
+-- ===================================
+-- AUTOPSY FORENSICS - Stage 1 (ID: 31)
+-- ===================================
+
+INSERT INTO stage_questions (tool_stage_id, question_text, options, correct_option, difficulty, explanation, points, order_index) VALUES
+
+(31, 'What type of forensics tool is Autopsy?', 
+'[{"id":"a","text":"Network forensics"},{"id":"b","text":"Digital forensics platform"},{"id":"c","text":"Memory forensics"},{"id":"d","text":"Mobile forensics"}]'::jsonb,
+'b', 'basic', 'Autopsy is a comprehensive digital forensics platform for analyzing file systems and artifacts.', 10, 1),
+
+(31, 'What is the first step in Autopsy?', 
+'[{"id":"a","text":"Add data source"},{"id":"b","text":"Create new case"},{"id":"c","text":"Run analysis"},{"id":"d","text":"Generate report"}]'::jsonb,
+'b', 'basic', 'Creating a new case is the first step, which organizes all investigation data.', 10, 2),
+
+(31, 'Which file systems does Autopsy support?', 
+'[{"id":"a","text":"NTFS"},{"id":"b","text":"FAT32"},{"id":"c","text":"Ext3/Ext4"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'basic', 'Autopsy supports all major file systems including NTFS, FAT, and Ext variants.', 10, 3),
+
+(31, 'What is an artifact in Autopsy?', 
+'[{"id":"a","text":"A deleted file"},{"id":"b","text":"Evidence of user activity"},{"id":"c","text":"System log"},{"id":"d","text":"Image file"}]'::jsonb,
+'b', 'basic', 'Artifacts are traces of user activity such as web history, downloads, or program execution.', 10, 4),
+
+(31, 'Which view shows files organized by type?', 
+'[{"id":"a","text":"File Types"},{"id":"b","text":"Directory Tree"},{"id":"c","text":"Timeline"},{"id":"d","text":"Results"}]'::jsonb,
+'a', 'basic', 'The File Types view categorizes files by extension and type for easier analysis.', 10, 5),
+
+(31, 'What does the Timeline feature do?', 
+'[{"id":"a","text":"Shows file creation times"},{"id":"b","text":"Displays chronological activity"},{"id":"c","text":"Tracks user sessions"},{"id":"d","text":"Monitors real-time events"}]'::jsonb,
+'b', 'basic', 'Timeline displays file system events chronologically, helping reconstruct activity sequences.', 10, 6),
+
+(31, 'How do you search for specific files in Autopsy?', 

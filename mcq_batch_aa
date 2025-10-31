@@ -1,0 +1,50 @@
+-- Populate MCQ Questions for Key Tool Stages
+-- 10+ questions per module mixing basic commands and advanced scenarios
+
+-- ===================================
+-- WIRESHARK MASTERY - Stage 1 (ID: 1)
+-- ===================================
+
+INSERT INTO stage_questions (tool_stage_id, question_text, options, correct_option, difficulty, explanation, points, order_index) VALUES
+
+(1, 'Which command starts Wireshark in GUI mode?', 
+'[{"id":"a","text":"wireshark"},{"id":"b","text":"tshark"},{"id":"c","text":"tcpdump"},{"id":"d","text":"wireshark-gui"}]'::jsonb,
+'a', 'basic', 'The command "wireshark" launches the graphical user interface.', 10, 1),
+
+(1, 'What permission group is required for packet capture on Linux?', 
+'[{"id":"a","text":"sudo"},{"id":"b","text":"wireshark"},{"id":"c","text":"root"},{"id":"d","text":"netadmin"}]'::jsonb,
+'b', 'basic', 'Users must be added to the wireshark group to capture packets without root.', 10, 2),
+
+(1, 'Which file format does Wireshark use to save captures?', 
+'[{"id":"a","text":".pcap"},{"id":"b","text":".cap"},{"id":"c","text":".wire"},{"id":"d","text":".pkt"}]'::jsonb,
+'a', 'basic', 'Wireshark saves captures in .pcap (packet capture) format by default.', 10, 3),
+
+(1, 'Which display filter shows only HTTP traffic?', 
+'[{"id":"a","text":"tcp.port == 80"},{"id":"b","text":"http"},{"id":"c","text":"protocol == http"},{"id":"d","text":"port 80"}]'::jsonb,
+'b', 'basic', 'The display filter "http" shows all HTTP protocol traffic regardless of port.', 10, 4),
+
+(1, 'What does the -k flag do when starting Wireshark?', 
+'[{"id":"a","text":"Kill existing instance"},{"id":"b","text":"Start capture immediately"},{"id":"c","text":"Keep running"},{"id":"d","text":"Kiosk mode"}]'::jsonb,
+'b', 'basic', 'The -k flag starts packet capture immediately on launch.', 10, 5),
+
+(1, 'Which command line tool is Wireshark''s CLI equivalent?', 
+'[{"id":"a","text":"tcpdump"},{"id":"b","text":"tshark"},{"id":"c","text":"capinfos"},{"id":"d","text":"dumpcap"}]'::jsonb,
+'b', 'basic', 'tshark is the command-line version of Wireshark with similar functionality.', 10, 6),
+
+(1, 'How do you filter for DNS queries in Wireshark?', 
+'[{"id":"a","text":"port 53"},{"id":"b","text":"dns.query"},{"id":"c","text":"udp.port == 53"},{"id":"d","text":"protocol dns"}]'::jsonb,
+'b', 'basic', 'The display filter "dns.query" specifically shows DNS query packets.', 10, 7),
+
+(1, 'What command captures 100 packets and then stops?', 
+'[{"id":"a","text":"tshark -c 100"},{"id":"b","text":"wireshark -n 100"},{"id":"c","text":"tcpdump -c 100"},{"id":"d","text":"Both A and C"}]'::jsonb,
+'d', 'basic', 'Both tshark and tcpdump use -c flag to specify packet count.', 10, 8),
+
+(1, 'You are investigating potential malware C2 traffic. Which Wireshark feature would help identify suspicious periodic connections?', 
+'[{"id":"a","text":"Statistics > Conversations"},{"id":"b","text":"Statistics > IO Graphs"},{"id":"c","text":"Follow TCP Stream"},{"id":"d","text":"Protocol Hierarchy"}]'::jsonb,
+'b', 'advanced', 'IO Graphs visualize traffic patterns over time, making periodic beaconing behavior visible.', 15, 9),
+
+(1, 'You found encrypted HTTPS traffic suspected of data exfiltration. What is the BEST approach to analyze it?', 
+'[{"id":"a","text":"Try to decrypt using rainbow tables"},{"id":"b","text":"Analyze packet sizes and timing patterns"},{"id":"c","text":"Use Wireshark decryption with SSL keys"},{"id":"d","text":"Focus on DNS queries instead"}]'::jsonb,
+'c', 'advanced', 'If SSL/TLS keys are available (from memory dump or key log file), Wireshark can decrypt the traffic for analysis.', 15, 10),
+
+(1, 'During incident response, you need to capture traffic on a high-volume network interface. Which tool is most efficient?', 

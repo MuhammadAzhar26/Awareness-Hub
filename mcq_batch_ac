@@ -1,0 +1,50 @@
+'[{"id":"a","text":"nmap -sV -sC --script vuln target"},{"id":"b","text":"nmap -A -p- target"},{"id":"c","text":"nmap -O -sS target"},{"id":"d","text":"nmap --script all target"}]'::jsonb,
+'a', 'advanced', 'Combining -sV (version detection), -sC (default scripts), and --script vuln runs vulnerability detection scripts.', 15, 10),
+
+(7, 'You are pentesting an air-gapped network with strict egress filtering. What scanning approach is most appropriate?', 
+'[{"id":"a","text":"Aggressive scan with -A flag"},{"id":"b","text":"Slow scan with timing templates -T1 or -T2"},{"id":"c","text":"Fast scan with -T5"},{"id":"d","text":"Standard scan with no timing options"}]'::jsonb,
+'b', 'advanced', 'Slow scans (-T1/-T2) are less likely to trigger IDS/IPS and are appropriate for sensitive environments.', 15, 11),
+
+(7, 'During a pentest, firewalls are blocking your SYN scans. Which technique might bypass stateless firewalls?', 
+'[{"id":"a","text":"Use -sA ACK scan"},{"id":"b","text":"Fragment packets with -f"},{"id":"c","text":"Use -sW Window scan"},{"id":"d","text":"All of the above"}]'::jsonb,
+'d', 'advanced', 'ACK scans, packet fragmentation, and Window scans can all help bypass certain firewall configurations.', 15, 12);
+
+-- ===================================
+-- METASPLOIT FRAMEWORK - Stage 1 (ID: 12)
+-- ===================================
+
+INSERT INTO stage_questions (tool_stage_id, question_text, options, correct_option, difficulty, explanation, points, order_index) VALUES
+
+(12, 'What command starts the Metasploit console?', 
+'[{"id":"a","text":"msfconsole"},{"id":"b","text":"metasploit"},{"id":"c","text":"msf"},{"id":"d","text":"msfcli"}]'::jsonb,
+'a', 'basic', 'The msfconsole command launches the interactive Metasploit console.', 10, 1),
+
+(12, 'Which command searches for exploits in Metasploit?', 
+'[{"id":"a","text":"search"},{"id":"b","text":"find"},{"id":"c","text":"locate"},{"id":"d","text":"query"}]'::jsonb,
+'a', 'basic', 'The "search" command finds modules by name, type, platform, or other attributes.', 10, 2),
+
+(12, 'What command shows available options for a module?', 
+'[{"id":"a","text":"show options"},{"id":"b","text":"options"},{"id":"c","text":"get options"},{"id":"d","text":"list"}]'::jsonb,
+'a', 'basic', 'The "show options" command displays all configurable parameters for the current module.', 10, 3),
+
+(12, 'How do you set the target IP address?', 
+'[{"id":"a","text":"set RHOST <ip>"},{"id":"b","text":"set TARGET <ip>"},{"id":"c","text":"set IP <ip>"},{"id":"d","text":"set HOST <ip>"}]'::jsonb,
+'a', 'basic', 'RHOST (Remote Host) is the standard variable for target IP addresses.', 10, 4),
+
+(12, 'Which command executes the loaded exploit?', 
+'[{"id":"a","text":"run"},{"id":"b","text":"exploit"},{"id":"c","text":"execute"},{"id":"d","text":"Both A and B"}]'::jsonb,
+'d', 'basic', 'Both "run" and "exploit" commands launch the loaded module.', 10, 5),
+
+(12, 'What is a payload in Metasploit?', 
+'[{"id":"a","text":"The exploit code"},{"id":"b","text":"The code that runs after successful exploitation"},{"id":"c","text":"The target system"},{"id":"d","text":"The scanning module"}]'::jsonb,
+'b', 'basic', 'A payload is the code executed on the target system after successful exploitation.', 10, 6),
+
+(12, 'Which command lists all available payloads?', 
+'[{"id":"a","text":"show payloads"},{"id":"b","text":"list payloads"},{"id":"c","text":"get payloads"},{"id":"d","text":"payloads"}]'::jsonb,
+'a', 'basic', 'The "show payloads" command displays all payload modules compatible with the current exploit.', 10, 7),
+
+(12, 'What is Meterpreter?', 
+'[{"id":"a","text":"A scanning tool"},{"id":"b","text":"An advanced payload"},{"id":"c","text":"An exploit module"},{"id":"d","text":"A database"}]'::jsonb,
+'b', 'basic', 'Meterpreter is an advanced, dynamically extensible payload that operates in memory.', 10, 8),
+
+(12, 'You gained initial access to a network. What Metasploit module would help you pivot to internal systems?', 
