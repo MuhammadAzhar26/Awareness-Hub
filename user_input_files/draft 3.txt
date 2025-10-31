@@ -1,0 +1,2759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AwarenessHub - Cybersecurity Learning Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .user-stats {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px auto;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .module-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .module-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .module-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .module-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .difficulty {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .difficulty.beginner {
+            background: #E8F5E8;
+            color: #4CAF50;
+        }
+
+        .difficulty.intermediate {
+            background: #FFF3E0;
+            color: #FF9800;
+        }
+
+        .difficulty.advanced {
+            background: #FFEBEE;
+            color: #F44336;
+        }
+
+        .module-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .module-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .module-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .badges-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .badges-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+        }
+
+        .badge {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+        }
+
+        .badge.earned {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .badge.locked {
+            background: #f5f5f5;
+            color: #999;
+        }
+
+        .badge-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .badge-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .simulation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .simulation-content {
+            margin-top: 20px;
+        }
+
+        .challenge-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .challenge-button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .feedback.success {
+            background: #E8F5E8;
+            color: #4CAF50;
+            border: 2px solid #4CAF50;
+        }
+
+        .feedback.error {
+            background: #FFEBEE;
+            color: #F44336;
+            border: 2px solid #F44336;
+        }
+
+        .scenario-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .stage-visual {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .stage-progress-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+
+        .stage-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .stage-dot.completed {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .stage-dot.current {
+            background: #FF9800;
+            color: white;
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+        }
+
+        .stage-dot.upcoming {
+            background: #e0e0e0;
+            color: #999;
+        }
+
+        .stage-connector {
+            width: 40px;
+            height: 3px;
+            background: #e0e0e0;
+        }
+
+        .stage-connector.completed {
+            background: #4CAF50;
+        }
+
+        .interactive-element {
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .drag-drop-area {
+            min-height: 100px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .drag-drop-area.drag-over {
+            border-color: #4CAF50;
+            background: #E8F5E8;
+        }
+
+        .draggable-item {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: move;
+            margin: 5px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .draggable-item:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .cleanup-item:hover {
+            background: #f0f8ff;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .user-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes celebrationPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+        
+        input[type="checkbox"]:checked + span {
+            background-color: #4CAF50;
+        }
+        
+        input[type="checkbox"]:checked + span:before {
+            content: "";
+            position: absolute;
+            left: 26px;
+            top: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            transition: .4s;
+        }
+        
+        input[type="checkbox"] + span:before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            transition: .4s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ AwarenessHub</h1>
+            <p>Learn Cybersecurity Step by Step - Beginner Friendly!</p>
+        </div>
+
+        <div class="user-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="totalPoints">350</div>
+                <div class="stat-label">Total Points</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="completedModules">1</div>
+                <div class="stat-label">Modules Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="currentLevel">Level 2</div>
+                <div class="stat-label">Current Level</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 35%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="badgesEarned">2</div>
+                <div class="stat-label">Badges Earned</div>
+            </div>
+        </div>
+
+        <div class="modules-grid">
+            <div class="module-card" onclick="openModule('cryptography')">
+                <div class="module-header">
+                    <div class="module-icon">🔐</div>
+                    <div class="module-title">Secret Message Detective</div>
+                </div>
+                <div class="module-description">
+                    Help Detective Cipher solve mysterious coded messages! Start with simple letter shifts and work your way up to cracking secret spy communications. Perfect for beginners!
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty beginner">Beginner</span>
+                    <span>5 Stages • 10 min • 1,000 pts</span>
+                </div>
+                <button class="module-button">🔍 Start Detective Work</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('passwords')">
+                <div class="module-header">
+                    <div class="module-icon">🔑</div>
+                    <div class="module-title">Password Guardian Academy</div>
+                </div>
+                <div class="module-description">
+                    Learn to create super-strong passwords! Build your own password fortress and discover why "password123" won't protect your digital treasures.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty beginner">Beginner</span>
+                    <span>4 Stages • 8 min • 800 pts</span>
+                </div>
+                <button class="module-button">🛡️ Guard Your Passwords</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('phishing')">
+                <div class="module-header">
+                    <div class="module-icon">🎣</div>
+                    <div class="module-title">Email Detective Game</div>
+                </div>
+                <div class="module-description">
+                    Become an email detective! Learn to spot fake emails that try to steal your information. Practice with real-looking examples in a safe environment.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty beginner">Beginner</span>
+                    <span>4 Stages • 12 min • 900 pts</span>
+                </div>
+                <button class="module-button">🕵️ Investigate Emails</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('network')">
+                <div class="module-header">
+                    <div class="module-icon">🌐</div>
+                    <div class="module-title">Internet Safety Explorer</div>
+                </div>
+                <div class="module-description">
+                    Explore how the internet works and learn to stay safe online! Discover what happens when you click a link and how to protect your digital journey.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty beginner">Beginner</span>
+                    <span>5 Stages • 15 min • 1,200 pts</span>
+                </div>
+                <button class="module-button">🚀 Explore Safely</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('social')">
+                <div class="module-header">
+                    <div class="module-icon">📱</div>
+                    <div class="module-title">Social Media Shield</div>
+                </div>
+                <div class="module-description">
+                    Master social media privacy! Learn what to share, what to keep private, and how to spot fake profiles trying to trick you.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty beginner">Beginner</span>
+                    <span>4 Stages • 10 min • 700 pts</span>
+                </div>
+                <button class="module-button">🛡️ Protect Your Profile</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('malware')">
+                <div class="module-header">
+                    <div class="module-icon">🦠</div>
+                    <div class="module-title">Virus Hunter Training</div>
+                </div>
+                <div class="module-description">
+                    Learn about computer viruses and how to stop them! Understand what malware is and how to keep your devices clean and healthy.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty intermediate">Intermediate</span>
+                    <span>5 Stages • 18 min • 1,500 pts</span>
+                </div>
+                <button class="module-button">🔬 Hunt Viruses</button>
+            </div>
+        </div>
+
+        <div class="badges-section">
+            <div class="badges-title">🏆 Achievement Badges</div>
+            <div class="badges-grid">
+                <div class="badge earned">
+                    <div class="badge-icon">🔓</div>
+                    <div class="badge-name">First Decoder</div>
+                </div>
+                <div class="badge earned">
+                    <div class="badge-icon">🛡️</div>
+                    <div class="badge-name">Password Pro</div>
+                </div>
+                <div class="badge locked">
+                    <div class="badge-icon">🕵️</div>
+                    <div class="badge-name">Email Detective</div>
+                </div>
+                <div class="badge locked">
+                    <div class="badge-icon">🌐</div>
+                    <div class="badge-name">Safe Explorer</div>
+                </div>
+                <div class="badge locked">
+                    <div class="badge-icon">📱</div>
+                    <div class="badge-name">Social Guardian</div>
+                </div>
+                <div class="badge locked">
+                    <div class="badge-icon">🦠</div>
+                    <div class="badge-name">Virus Hunter</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulation Modal -->
+    <div class="simulation-modal" id="simulationModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Module Challenge</h2>
+            <div class="simulation-content" id="simulationContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userStats = {
+            points: 350,
+            completedModules: 1,
+            level: 2,
+            badges: 2
+        };
+
+        let gameState = {
+            currentModule: null,
+            currentStage: 1,
+            maxStages: 1,
+            stageProgress: {},
+            completedStages: []
+        };
+
+        const modules = {
+            cryptography: {
+                title: "🔐 Secret Message Detective",
+                description: "Learn to decode secret messages step by step!",
+                stages: 5,
+                difficulty: "Beginner",
+                points: 1000,
+                stageData: {
+                    1: {
+                        title: "🔤 Letter Shifting Basics",
+                        description: "Learn how Caesar cipher works by shifting letters!",
+                        type: "caesar_basic"
+                    },
+                    2: {
+                        title: "🎯 Practice Decoding",
+                        description: "Try decoding a simple message yourself!",
+                        type: "caesar_practice"
+                    },
+                    3: {
+                        title: "🔍 Find the Right Shift",
+                        description: "Figure out how many letters to shift!",
+                        type: "caesar_find_shift"
+                    },
+                    4: {
+                        title: "📝 Alphabet Substitution",
+                        description: "Learn about replacing letters with other letters!",
+                        type: "substitution_intro"
+                    },
+                    5: {
+                        title: "🏆 Master Detective Challenge",
+                        description: "Solve a mystery message to complete your training!",
+                        type: "final_challenge"
+                    }
+                }
+            },
+            passwords: {
+                title: "🔑 Password Guardian Academy",
+                description: "Build the strongest passwords ever!",
+                stages: 4,
+                difficulty: "Beginner",
+                points: 800,
+                stageData: {
+                    1: {
+                        title: "🏠 Password House Building",
+                        description: "Build a strong password house with different materials!",
+                        type: "password_builder"
+                    },
+                    2: {
+                        title: "💪 Strength Testing Lab",
+                        description: "Test how strong different passwords are!",
+                        type: "strength_tester"
+                    },
+                    3: {
+                        title: "🎭 Creating Memorable Passwords",
+                        description: "Learn tricks to remember super strong passwords!",
+                        type: "memorable_passwords"
+                    },
+                    4: {
+                        title: "🛡️ Password Manager Basics",
+                        description: "Discover how password managers keep you safe!",
+                        type: "password_manager"
+                    }
+                }
+            },
+            phishing: {
+                title: "🎣 Email Detective Game",
+                description: "Spot fake emails like a pro detective!",
+                stages: 4,
+                difficulty: "Beginner",
+                points: 900,
+                stageData: {
+                    1: {
+                        title: "📧 Good vs Bad Emails",
+                        description: "Learn the difference between real and fake emails!",
+                        type: "email_basics"
+                    },
+                    2: {
+                        title: "🔍 Suspicious Clues Hunt",
+                        description: "Find the clues that show an email is fake!",
+                        type: "clue_hunting"
+                    },
+                    3: {
+                        title: "🎭 Fake Website Spotting",
+                        description: "Learn to identify fake websites that steal information!",
+                        type: "fake_websites"
+                    },
+                    4: {
+                        title: "🛡️ Protection Strategies",
+                        description: "Master the best ways to stay safe from email tricks!",
+                        type: "protection_methods"
+                    }
+                }
+            },
+            network: {
+                title: "🌐 Internet Safety Explorer",
+                description: "Explore the internet safely!",
+                stages: 5,
+                difficulty: "Beginner",
+                points: 1200,
+                stageData: {
+                    1: {
+                        title: "🌍 How the Internet Works",
+                        description: "Discover the amazing journey of data across the internet!",
+                        type: "internet_basics"
+                    },
+                    2: {
+                        title: "🔒 HTTPS vs HTTP",
+                        description: "Learn why some websites are safer than others!",
+                        type: "https_learning"
+                    },
+                    3: {
+                        title: "📡 WiFi Safety Rules",
+                        description: "Stay safe when using public WiFi!",
+                        type: "wifi_safety"
+                    },
+                    4: {
+                        title: "🔗 Safe Link Clicking",
+                        description: "Learn to check links before clicking them!",
+                        type: "link_safety"
+                    },
+                    5: {
+                        title: "🛡️ Browser Security Settings",
+                        description: "Set up your browser to protect you automatically!",
+                        type: "browser_security"
+                    }
+                }
+            },
+            social: {
+                title: "📱 Social Media Shield",
+                description: "Master social media privacy!",
+                stages: 4,
+                difficulty: "Beginner",
+                points: 700,
+                stageData: {
+                    1: {
+                        title: "👥 Privacy Settings Explorer",
+                        description: "Discover all the privacy controls in social media!",
+                        type: "privacy_settings"
+                    },
+                    2: {
+                        title: "📸 What to Share Quiz",
+                        description: "Learn what's safe to share and what to keep private!",
+                        type: "sharing_quiz"
+                    },
+                    3: {
+                        title: "🎭 Fake Profile Detective",
+                        description: "Spot fake profiles trying to trick you!",
+                        type: "fake_profiles"
+                    },
+                    4: {
+                        title: "🛡️ Digital Footprint Cleaner",
+                        description: "Clean up your digital footprint and stay safe!",
+                        type: "digital_footprint"
+                    }
+                }
+            },
+            malware: {
+                title: "🦠 Virus Hunter Training",
+                description: "Learn to protect against computer viruses!",
+                stages: 5,
+                difficulty: "Intermediate",
+                points: 1500,
+                stageData: {
+                    1: {
+                        title: "🦠 What is Malware?",
+                        description: "Learn about different types of computer viruses!",
+                        type: "malware_types"
+                    },
+                    2: {
+                        title: "🚨 Warning Signs Detective",
+                        description: "Spot the signs that your computer might be infected!",
+                        type: "infection_signs"
+                    },
+                    3: {
+                        title: "🛡️ Antivirus Basics",
+                        description: "Learn how antivirus software protects you!",
+                        type: "antivirus_basics"
+                    },
+                    4: {
+                        title: "📥 Safe Downloading Rules",
+                        description: "Master the rules for downloading files safely!",
+                        type: "safe_downloads"
+                    },
+                    5: {
+                        title: "🔧 System Cleanup Lab",
+                        description: "Learn to keep your computer clean and healthy!",
+                        type: "system_cleanup"
+                    }
+                }
+            }
+        };
+
+        function openModule(moduleId) {
+            const module = modules[moduleId];
+            if (!module) return;
+
+            gameState.currentModule = moduleId;
+            gameState.currentStage = 1;
+            gameState.maxStages = module.stages;
+
+            document.getElementById('modalTitle').textContent = module.title;
+            loadStageContent();
+            document.getElementById('simulationModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('simulationModal').style.display = 'none';
+        }
+
+        function loadStageContent() {
+            const module = modules[gameState.currentModule];
+            const stageData = module.stageData[gameState.currentStage];
+            
+            let content = `
+                <div class="stage-visual">
+                    <h3>${stageData.title}</h3>
+                    <p style="margin-top: 10px; font-size: 1.1rem;">${stageData.description}</p>
+                </div>
+                
+                <div class="stage-progress-visual">
+                    ${generateStageProgressDots()}
+                </div>
+                
+                <div class="interactive-element">
+                    ${generateStageContent(stageData.type)}
+                </div>
+                
+                <div id="feedback"></div>
+            `;
+            
+            document.getElementById('simulationContent').innerHTML = content;
+        }
+
+        function generateStageProgressDots() {
+            let dots = '';
+            for (let i = 1; i <= gameState.maxStages; i++) {
+                let className = 'upcoming';
+                if (i < gameState.currentStage) className = 'completed';
+                else if (i === gameState.currentStage) className = 'current';
+                
+                dots += `<div class="stage-dot ${className}">${i}</div>`;
+                if (i < gameState.maxStages) {
+                    let connectorClass = i < gameState.currentStage ? 'completed' : '';
+                    dots += `<div class="stage-connector ${connectorClass}"></div>`;
+                }
+            }
+            return dots;
+        }
+
+        function generateStageContent(type) {
+            switch(type) {
+                case 'caesar_basic':
+                    return `
+                        <h4>🔤 Learn Letter Shifting!</h4>
+                        <p>In Caesar cipher, we shift each letter by the same amount. Let's try shifting by 3:</p>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; text-align: center;">
+                            <div style="background: #e3f2fd; padding: 15px; border-radius: 10px;">
+                                <div style="font-size: 2rem;">A</div>
+                                <div>↓ +3</div>
+                                <div style="font-size: 2rem; color: #4CAF50;">D</div>
+                            </div>
+                            <div style="background: #e3f2fd; padding: 15px; border-radius: 10px;">
+                                <div style="font-size: 2rem;">B</div>
+                                <div>↓ +3</div>
+                                <div style="font-size: 2rem; color: #4CAF50;">E</div>
+                            </div>
+                            <div style="background: #e3f2fd; padding: 15px; border-radius: 10px;">
+                                <div style="font-size: 2rem;">C</div>
+                                <div>↓ +3</div>
+                                <div style="font-size: 2rem; color: #4CAF50;">F</div>
+                            </div>
+                            <div style="background: #e3f2fd; padding: 15px; border-radius: 10px;">
+                                <div style="font-size: 2rem;">D</div>
+                                <div>↓ +3</div>
+                                <div style="font-size: 2rem; color: #4CAF50;">G</div>
+                            </div>
+                        </div>
+                        <p>Now you try! What does <strong>E</strong> become when shifted by 3?</p>
+                        <input type="text" class="challenge-input" id="letterShift" placeholder="Enter the shifted letter..." maxlength="1">
+                        <button class="challenge-button" onclick="checkAnswer('letterShift', 'H', 100)">Check Answer</button>
+                    `;
+                
+                case 'caesar_practice':
+                    return `
+                        <h4>🎯 Decode This Message!</h4>
+                        <p>Here's a secret message encoded with Caesar cipher (shift +3):</p>
+                        <div style="background: #000; color: #00ff00; padding: 20px; border-radius: 10px; font-family: monospace; font-size: 1.5rem; text-align: center; margin: 20px 0;">
+                            KHOOR
+                        </div>
+                        <p>Remember: Each letter is shifted 3 positions forward. To decode, shift 3 positions backward!</p>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <strong>Hint:</strong> K → H, H → E, O → L, O → L, R → O
+                        </div>
+                        <input type="text" class="challenge-input" id="decodeMessage" placeholder="Enter the decoded word...">
+                        <button class="challenge-button" onclick="checkAnswer('decodeMessage', 'HELLO', 150)">Decode Message</button>
+                    `;
+                
+                case 'caesar_find_shift':
+                    return `
+                        <h4>🔍 Find the Secret Shift!</h4>
+                        <p>This message is encoded, but we don't know the shift amount. Try different shifts to find the right one!</p>
+                        <div style="background: #000; color: #00ff00; padding: 20px; border-radius: 10px; font-family: monospace; font-size: 1.5rem; text-align: center; margin: 20px 0;">
+                            JBYYB
+                        </div>
+                        <div style="margin: 20px 0;">
+                            <label>Try different shift amounts:</label>
+                            <input type="range" id="shiftSlider" min="1" max="25" value="1" oninput="updateShiftPreview()" style="width: 100%; margin: 10px 0;">
+                            <div>Shift: <span id="shiftAmount">1</span></div>
+                            <div>Result: <span id="shiftResult" style="font-weight: bold; color: #4CAF50;">IAZZA</span></div>
+                        </div>
+                        <button class="challenge-button" onclick="checkShiftAnswer()">Submit Answer</button>
+                    `;
+                
+                case 'substitution_intro':
+                    return `
+                        <h4>📝 Letter Substitution Game!</h4>
+                        <p>Sometimes we replace letters with completely different letters! Match the coded letters to their real meanings:</p>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0;">
+                            <div class="drag-drop-area" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="S">
+                                <div>X = ?</div>
+                            </div>
+                            <div class="drag-drop-area" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="E">
+                                <div>K = ?</div>
+                            </div>
+                            <div class="drag-drop-area" ondrop="drop(event)" ondragover="allowDrop(event)" data-answer="T">
+                                <div>Y = ?</div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div class="draggable-item" draggable="true" ondragstart="drag(event)">S</div>
+                            <div class="draggable-item" draggable="true" ondragstart="drag(event)">E</div>
+                            <div class="draggable-item" draggable="true" ondragstart="drag(event)">T</div>
+                            <div class="draggable-item" draggable="true" ondragstart="drag(event)">A</div>
+                            <div class="draggable-item" draggable="true" ondragstart="drag(event)">R</div>
+                        </div>
+                        <p>Hint: The coded message "XKY" means "SET"!</p>
+                        <button class="challenge-button" onclick="checkSubstitution()">Check Substitution</button>
+                    `;
+                
+                case 'final_challenge':
+                    return `
+                        <h4>🏆 Master Detective Challenge!</h4>
+                        <p>Congratulations, Detective! You've learned the basics. Now solve this final mystery message:</p>
+                        <div style="background: linear-gradient(135deg, #ff6b6b, #ee5a52); color: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                            <h5>🚨 URGENT CASE FILE 🚨</h5>
+                            <p>A secret agent left this coded message before disappearing:</p>
+                            <div style="font-family: monospace; font-size: 1.3rem; text-align: center; margin: 15px 0; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
+                                PHHW DW PLGQLJKW
+                            </div>
+                            <p>Intelligence suggests it's a Caesar cipher. The fate of the mission depends on you!</p>
+                        </div>
+                        <input type="text" class="challenge-input" id="finalMessage" placeholder="Enter the decoded message...">
+                        <button class="challenge-button" onclick="checkAnswer('finalMessage', 'MEET AT MIDNIGHT', 300)">Solve the Mystery!</button>
+                    `;
+                
+                case 'password_builder':
+                    return `
+                        <h4>🏠 Build Your Password House!</h4>
+                        <p>Let's build a strong password house! Click on materials to add them to your password:</p>
+                        <div id="passwordHouse" style="background: #f0f0f0; border: 3px solid #ddd; border-radius: 15px; padding: 20px; margin: 20px 0; min-height: 100px; font-family: monospace; font-size: 1.5rem; text-align: center;">
+                            Your password will appear here...
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element" onclick="addToPassword('abc', '🧱')" style="cursor: pointer; text-align: center;">
+                                🧱 Lowercase Bricks<br><small>Add: abc</small>
+                            </div>
+                            <div class="interactive-element" onclick="addToPassword('XYZ', '🏗️')" style="cursor: pointer; text-align: center;">
+                                🏗️ Uppercase Beams<br><small>Add: XYZ</small>
+                            </div>
+                            <div class="interactive-element" onclick="addToPassword('123', '🔢')" style="cursor: pointer; text-align: center;">
+                                🔢 Number Foundation<br><small>Add: 123</small>
+                            </div>
+                            <div class="interactive-element" onclick="addToPassword('!@#', '⚡')" style="cursor: pointer; text-align: center;">
+                                ⚡ Special Symbols<br><small>Add: !@#</small>
+                            </div>
+                        </div>
+                        <div id="houseStrength" style="text-align: center; margin: 20px 0;">
+                            <div>House Strength: <span id="strengthLevel">Weak 🏚️</span></div>
+                        </div>
+                        <button class="challenge-button" onclick="checkPasswordHouse()">Test House Strength</button>
+                        <button class="challenge-button" onclick="clearPassword()" style="background: #ff6b6b;">Clear House</button>
+                    `;
+                
+                case 'strength_tester':
+                    return `
+                        <h4>💪 Password Strength Testing Lab!</h4>
+                        <p>Test different passwords to see how strong they are:</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element" onclick="testPassword('password')" style="cursor: pointer;">
+                                <strong>Test #1:</strong> "password" - Click to test!
+                            </div>
+                            <div class="interactive-element" onclick="testPassword('Password123')" style="cursor: pointer;">
+                                <strong>Test #2:</strong> "Password123" - Click to test!
+                            </div>
+                            <div class="interactive-element" onclick="testPassword('MyDog$Loves2Play!')" style="cursor: pointer;">
+                                <strong>Test #3:</strong> "MyDog$Loves2Play!" - Click to test!
+                            </div>
+                        </div>
+                        <div id="testResults" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; min-height: 100px;">
+                            Click on a password above to see its strength!
+                        </div>
+                        <button class="challenge-button" onclick="completeStrengthTest()">Complete Testing</button>
+                    `;
+                
+                case 'memorable_passwords':
+                    return `
+                        <h4>🎭 Create Memorable Strong Passwords!</h4>
+                        <p>Learn the "sentence method" - turn a sentence into a strong password!</p>
+                        <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                            <h5>Example:</h5>
+                            <div style="margin: 10px 0;">
+                                <strong>Sentence:</strong> "My cat has 2 eyes and loves fish!"<br>
+                                <strong>Password:</strong> Mch2eal! (first letter of each word + numbers/symbols)
+                            </div>
+                        </div>
+                        <p>Now you try! Create a password from this sentence:</p>
+                        <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin: 15px 0; font-style: italic;">
+                            "I love pizza with 3 toppings every Friday!"
+                        </div>
+                        <input type="text" class="challenge-input" id="memorablePassword" placeholder="Enter your password...">
+                        <button class="challenge-button" onclick="checkAnswer('memorablePassword', 'Ilpw3teF!', 200)">Check Password</button>
+                    `;
+                
+                case 'password_manager':
+                    return `
+                        <h4>🛡️ Password Manager Magic!</h4>
+                        <p>Password managers are like having a super-secure digital vault for all your passwords!</p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0;">
+                            <div style="background: #e8f5e8; padding: 20px; border-radius: 10px;">
+                                <h5>✅ With Password Manager:</h5>
+                                <ul style="margin: 10px 0; padding-left: 20px;">
+                                    <li>One master password to remember</li>
+                                    <li>Unique passwords for every site</li>
+                                    <li>Auto-fill login forms</li>
+                                    <li>Warns about weak passwords</li>
+                                </ul>
+                            </div>
+                            <div style="background: #ffebee; padding: 20px; border-radius: 10px;">
+                                <h5>❌ Without Password Manager:</h5>
+                                <ul style="margin: 10px 0; padding-left: 20px;">
+                                    <li>Same password everywhere</li>
+                                    <li>Forget passwords often</li>
+                                    <li>Write passwords on paper</li>
+                                    <li>Easy for hackers to break in</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>Which approach is safer?</p>
+                        <button class="challenge-button" onclick="checkAnswer('manager', 'with', 150)">With Password Manager</button>
+                        <button class="challenge-button" onclick="checkAnswer('manager', 'without', 0)" style="background: #ff6b6b;">Without Password Manager</button>
+                    `;
+                
+                case 'email_basics':
+                    return `
+                        <h4>📧 Good vs Bad Emails Detective Training!</h4>
+                        <p>Learn to spot the difference between real and fake emails! Click on each email to investigate:</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element" onclick="analyzeEmail('good')" style="cursor: pointer; border: 2px solid #4CAF50;">
+                                <strong>📨 Email #1 - From: support@amazon.com</strong><br>
+                                <small>Subject: Your order has been shipped!</small><br>
+                                <small>Dear John, Your recent order #12345 has been shipped...</small>
+                            </div>
+                            <div class="interactive-element" onclick="analyzeEmail('bad')" style="cursor: pointer; border: 2px solid #f44336;">
+                                <strong>📨 Email #2 - From: amazom-security@gmail.com</strong><br>
+                                <small>Subject: URGENT! Account suspended!!!</small><br>
+                                <small>Dear Customer, Click here NOW or lose account forever...</small>
+                            </div>
+                        </div>
+                        <div id="emailAnalysis" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; min-height: 100px;">
+                            Click on an email above to analyze it!
+                        </div>
+                        <button class="challenge-button" onclick="completeEmailBasics()">Complete Training</button>
+                    `;
+                
+                case 'clue_hunting':
+                    return `
+                        <h4>🔍 Suspicious Clues Hunt!</h4>
+                        <p>Find all the suspicious clues in this fake email! Click on each clue you spot:</p>
+                        <div style="background: #fff; border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin: 20px 0; font-family: Arial;">
+                            <div style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+                                <strong>From:</strong> <span class="clue-item" onclick="foundClue('sender')" style="cursor: pointer; background: #ffeb3b; padding: 2px;">security@payp4l.com</span><br>
+                                <strong>Subject:</strong> <span class="clue-item" onclick="foundClue('urgent')" style="cursor: pointer; background: #ffeb3b; padding: 2px;">URGENT ACTION REQUIRED!!!</span>
+                            </div>
+                            <div>
+                                Dear Valued Customer,<br><br>
+                                Your account will be <span class="clue-item" onclick="foundClue('threat')" style="cursor: pointer; background: #ffeb3b; padding: 2px;">CLOSED FOREVER</span> if you don't act now!<br><br>
+                                Click this link immediately: <span class="clue-item" onclick="foundClue('link')" style="cursor: pointer; background: #ffeb3b; padding: 2px;">http://paypal-security-check.suspicious-site.com</span><br><br>
+                                <span class="clue-item" onclick="foundClue('grammar')" style="cursor: pointer; background: #ffeb3b; padding: 2px;">You're account informations is at risk!</span><br><br>
+                                Sincerely,<br>
+                                PayPal Security Team
+                            </div>
+                        </div>
+                        <div id="clueCounter" style="text-align: center; margin: 20px 0;">
+                            <strong>Clues Found: <span id="cluesFound">0</span>/5</strong>
+                        </div>
+                        <div id="clueResults"></div>
+                    `;
+                
+                case 'fake_websites':
+                    return `
+                        <h4>🎭 Fake Website Spotting Challenge!</h4>
+                        <p>Compare these two websites. One is real, one is fake! Can you spot the differences?</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                            <div style="border: 3px solid #4CAF50; border-radius: 10px; padding: 15px;">
+                                <div style="background: #4CAF50; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                                    🔒 https://www.paypal.com
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                                    <h5>PayPal</h5>
+                                    <p>Welcome to PayPal</p>
+                                    <button style="background: #0070ba; color: white; border: none; padding: 8px 16px; border-radius: 4px;">Log In</button>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                                    ✅ Secure connection<br>
+                                    ✅ Correct spelling<br>
+                                    ✅ Official domain
+                                </div>
+                            </div>
+                            <div style="border: 3px solid #f44336; border-radius: 10px; padding: 15px;">
+                                <div style="background: #f44336; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                                    ⚠️ http://payp4l-security.com
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
+                                    <h5>PayPaI</h5>
+                                    <p>Welcom to PayPal</p>
+                                    <button style="background: #0070ba; color: white; border: none; padding: 8px 16px; border-radius: 4px;">Log In Now!</button>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.9rem; color: #f44336;">
+                                    ❌ No secure connection<br>
+                                    ❌ Spelling errors<br>
+                                    ❌ Suspicious domain
+                                </div>
+                            </div>
+                        </div>
+                        <p>Which website would you trust?</p>
+                        <button class="challenge-button" onclick="checkWebsite('real')">Left Website (Real)</button>
+                        <button class="challenge-button" onclick="checkWebsite('fake')" style="background: #f44336;">Right Website (Fake)</button>
+                    `;
+                
+                case 'protection_methods':
+                    return `
+                        <h4>🛡️ Email Protection Strategies!</h4>
+                        <p>Match each protection method with the right situation:</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element">
+                                <strong>Situation 1:</strong> You get an urgent email asking for your password
+                                <div style="margin-top: 10px;">
+                                    <button class="challenge-button" onclick="matchProtection(1, 'ignore')" style="font-size: 0.9rem; padding: 8px 12px;">Ignore and delete</button>
+                                    <button class="challenge-button" onclick="matchProtection(1, 'reply')" style="font-size: 0.9rem; padding: 8px 12px; background: #ff6b6b;">Reply with password</button>
+                                    <button class="challenge-button" onclick="matchProtection(1, 'forward')" style="font-size: 0.9rem; padding: 8px 12px; background: #ff9800;">Forward to friends</button>
+                                </div>
+                                <div id="result1"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <strong>Situation 2:</strong> An email has a suspicious link
+                                <div style="margin-top: 10px;">
+                                    <button class="challenge-button" onclick="matchProtection(2, 'click')" style="font-size: 0.9rem; padding: 8px 12px; background: #ff6b6b;">Click immediately</button>
+                                    <button class="challenge-button" onclick="matchProtection(2, 'hover')" style="font-size: 0.9rem; padding: 8px 12px;">Hover to check URL first</button>
+                                    <button class="challenge-button" onclick="matchProtection(2, 'share')" style="font-size: 0.9rem; padding: 8px 12px; background: #ff9800;">Share with everyone</button>
+                                </div>
+                                <div id="result2"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <strong>Situation 3:</strong> Email claims you won a prize you never entered
+                                <div style="margin-top: 10px;">
+                                    <button class="challenge-button" onclick="matchProtection(3, 'claim')" style="font-size: 0.9rem; padding: 8px 12px; background: #ff6b6b;">Claim prize immediately</button>
+                                    <button class="challenge-button" onclick="matchProtection(3, 'verify')" style="font-size: 0.9rem; padding: 8px 12px; background: #ff9800;">Ask for more details</button>
+                                    <button class="challenge-button" onclick="matchProtection(3, 'delete')" style="font-size: 0.9rem; padding: 8px 12px;">Delete as scam</button>
+                                </div>
+                                <div id="result3"></div>
+                            </div>
+                        </div>
+                        <div id="protectionScore" style="text-align: center; margin: 20px 0; font-size: 1.2rem; font-weight: bold;"></div>
+                    `;
+                
+                case 'internet_basics':
+                    return `
+                        <h4>🌍 The Amazing Internet Journey!</h4>
+                        <p>Follow your message as it travels across the internet! Click each step to see what happens:</p>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element step-box" onclick="showStep(1)" style="cursor: pointer; text-align: center;" id="step1">
+                                <div style="font-size: 2rem;">💻</div>
+                                <strong>Step 1</strong><br>
+                                <small>Your Computer</small>
+                            </div>
+                            <div class="interactive-element step-box" onclick="showStep(2)" style="cursor: pointer; text-align: center;" id="step2">
+                                <div style="font-size: 2rem;">📡</div>
+                                <strong>Step 2</strong><br>
+                                <small>Internet Provider</small>
+                            </div>
+                            <div class="interactive-element step-box" onclick="showStep(3)" style="cursor: pointer; text-align: center;" id="step3">
+                                <div style="font-size: 2rem;">🌐</div>
+                                <strong>Step 3</strong><br>
+                                <small>Internet Highways</small>
+                            </div>
+                            <div class="interactive-element step-box" onclick="showStep(4)" style="cursor: pointer; text-align: center;" id="step4">
+                                <div style="font-size: 2rem;">🏢</div>
+                                <strong>Step 4</strong><br>
+                                <small>Website Server</small>
+                            </div>
+                        </div>
+                        <div id="stepExplanation" style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 20px 0; min-height: 100px;">
+                            Click on each step above to learn how your internet message travels!
+                        </div>
+                        <div id="journeyProgress" style="text-align: center; margin: 20px 0;">
+                            <strong>Journey Progress: <span id="stepsCompleted">0</span>/4 steps learned</strong>
+                        </div>
+                    `;
+                
+                case 'https_learning':
+                    return `
+                        <h4>🔒 HTTPS vs HTTP Security Battle!</h4>
+                        <p>See the difference between secure and unsecure websites!</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                            <div style="border: 3px solid #f44336; border-radius: 15px; padding: 20px; text-align: center;">
+                                <h5 style="color: #f44336;">❌ HTTP (Not Safe)</h5>
+                                <div style="background: #ffebee; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                                    <div style="font-family: monospace;">http://shopping-site.com</div>
+                                </div>
+                                <div style="background: #fff; border: 2px dashed #f44336; padding: 15px; border-radius: 10px;">
+                                    <div style="font-size: 0.9rem;">Your password: secret123</div>
+                                    <div style="margin: 10px 0; color: #f44336;">👁️ Hackers can see this!</div>
+                                </div>
+                                <button class="challenge-button" onclick="demonstrateSecurity('http')" style="background: #f44336;">Show HTTP Risks</button>
+                            </div>
+                            <div style="border: 3px solid #4CAF50; border-radius: 15px; padding: 20px; text-align: center;">
+                                <h5 style="color: #4CAF50;">✅ HTTPS (Safe)</h5>
+                                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                                    <div style="font-family: monospace;">🔒 https://shopping-site.com</div>
+                                </div>
+                                <div style="background: #fff; border: 2px solid #4CAF50; padding: 15px; border-radius: 10px;">
+                                    <div style="font-size: 0.9rem;">Your password: ••••••••</div>
+                                    <div style="margin: 10px 0; color: #4CAF50;">🛡️ Encrypted & Protected!</div>
+                                </div>
+                                <button class="challenge-button" onclick="demonstrateSecurity('https')">Show HTTPS Protection</button>
+                            </div>
+                        </div>
+                        <div id="securityDemo" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; min-height: 100px;">
+                            Click the buttons above to see how each type of connection works!
+                        </div>
+                    `;
+                
+                case 'wifi_safety':
+                    return `
+                        <h4>📡 WiFi Safety Adventure!</h4>
+                        <p>You're at a coffee shop and need internet. Choose the safest WiFi option:</p>
+                        <div style="background: linear-gradient(135deg, #8B4513, #D2691E); color: white; padding: 20px; border-radius: 15px; margin: 20px 0;">
+                            <h5>☕ Welcome to Coffee Corner!</h5>
+                            <p>Available WiFi Networks:</p>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element wifi-option" onclick="chooseWifi('free')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>📶 FREE_WIFI_NO_PASSWORD</strong><br>
+                                        <small>Open network • No password required</small>
+                                    </div>
+                                    <div style="font-size: 1.5rem;">⚠️</div>
+                                </div>
+                            </div>
+                            <div class="interactive-element wifi-option" onclick="chooseWifi('coffee')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>📶 CoffeeCorner_Guest</strong><br>
+                                        <small>Password protected • Ask staff for password</small>
+                                    </div>
+                                    <div style="font-size: 1.5rem;">🔒</div>
+                                </div>
+                            </div>
+                            <div class="interactive-element wifi-option" onclick="chooseWifi('hotspot')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>📱 Your Phone Hotspot</strong><br>
+                                        <small>Your personal mobile data • Uses your data plan</small>
+                                    </div>
+                                    <div style="font-size: 1.5rem;">🛡️</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="wifiResult" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; min-height: 100px;">
+                            Choose a WiFi network above to see how safe it is!
+                        </div>
+                    `;
+                
+                case 'link_safety':
+                    return `
+                        <h4>🔗 Safe Link Clicking Training!</h4>
+                        <p>Before clicking any link, always check where it really goes! Hover over each link to reveal its true destination:</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element">
+                                <strong>Link 1:</strong> "Check your bank account"<br>
+                                <a href="#" onmouseover="revealLink(1, 'https://secure-bank-login.suspicious-site.ru')" style="color: #2196F3; text-decoration: underline;">Click here to view your account</a>
+                                <div id="linkReveal1" style="margin-top: 10px; font-family: monospace; color: #f44336; font-weight: bold;"></div>
+                                <button class="challenge-button" onclick="judgeLink(1, 'unsafe')" style="font-size: 0.9rem; margin-top: 10px;">This link is UNSAFE</button>
+                                <button class="challenge-button" onclick="judgeLink(1, 'safe')" style="font-size: 0.9rem; margin-top: 10px; background: #4CAF50;">This link is SAFE</button>
+                                <div id="linkResult1"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <strong>Link 2:</strong> "Download our mobile app"<br>
+                                <a href="#" onmouseover="revealLink(2, 'https://apps.apple.com/app/official-bank-app')" style="color: #2196F3; text-decoration: underline;">Get our official app</a>
+                                <div id="linkReveal2" style="margin-top: 10px; font-family: monospace; color: #4CAF50; font-weight: bold;"></div>
+                                <button class="challenge-button" onclick="judgeLink(2, 'unsafe')" style="font-size: 0.9rem; margin-top: 10px; background: #f44336;">This link is UNSAFE</button>
+                                <button class="challenge-button" onclick="judgeLink(2, 'safe')" style="font-size: 0.9rem; margin-top: 10px;">This link is SAFE</button>
+                                <div id="linkResult2"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <strong>Link 3:</strong> "Urgent security update required"<br>
+                                <a href="#" onmouseover="revealLink(3, 'http://security-update-now.malware-site.tk/download.exe')" style="color: #2196F3; text-decoration: underline;">Download security patch</a>
+                                <div id="linkReveal3" style="margin-top: 10px; font-family: monospace; color: #f44336; font-weight: bold;"></div>
+                                <button class="challenge-button" onclick="judgeLink(3, 'unsafe')" style="font-size: 0.9rem; margin-top: 10px;">This link is UNSAFE</button>
+                                <button class="challenge-button" onclick="judgeLink(3, 'safe')" style="font-size: 0.9rem; margin-top: 10px; background: #4CAF50;">This link is SAFE</button>
+                                <div id="linkResult3"></div>
+                            </div>
+                        </div>
+                        <div id="linkSafetyScore" style="text-align: center; margin: 20px 0; font-size: 1.2rem; font-weight: bold;"></div>
+                    `;
+                
+                case 'browser_security':
+                    return `
+                        <h4>🛡️ Browser Security Settings Lab!</h4>
+                        <p>Set up your browser to protect you automatically! Toggle each security setting:</p>
+                        <div style="background: #f8f9fa; border-radius: 15px; padding: 25px; margin: 20px 0;">
+                            <h5>🌐 Browser Security Control Panel</h5>
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                                <div class="interactive-element" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🚫 Block Pop-ups</strong><br>
+                                        <small>Prevents annoying and malicious pop-up windows</small>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input type="checkbox" id="popupBlocker" onchange="updateSecurity()" style="opacity: 0; width: 0; height: 0;">
+                                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                    </label>
+                                </div>
+                                <div class="interactive-element" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🔒 HTTPS-Only Mode</strong><br>
+                                        <small>Only visit websites with secure connections</small>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input type="checkbox" id="httpsOnly" onchange="updateSecurity()" style="opacity: 0; width: 0; height: 0;">
+                                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                    </label>
+                                </div>
+                                <div class="interactive-element" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🛡️ Safe Browsing</strong><br>
+                                        <small>Warns about dangerous websites and downloads</small>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input type="checkbox" id="safeBrowsing" onchange="updateSecurity()" style="opacity: 0; width: 0; height: 0;">
+                                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                    </label>
+                                </div>
+                                <div class="interactive-element" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🍪 Block Third-Party Cookies</strong><br>
+                                        <small>Prevents websites from tracking you across the internet</small>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input type="checkbox" id="cookieBlocker" onchange="updateSecurity()" style="opacity: 0; width: 0; height: 0;">
+                                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="securityLevel" style="text-align: center; margin: 20px 0; padding: 15px; border-radius: 10px; font-weight: bold;">
+                                Security Level: <span id="levelText">Basic 🔓</span>
+                            </div>
+                            <button class="challenge-button" onclick="completeBrowserSecurity()">Apply Security Settings</button>
+                        </div>
+                    `;
+
+                // Social Media Shield Stages
+                case 'privacy_settings':
+                    return `
+                        <h4>👥 Privacy Settings Control Center!</h4>
+                        <p>Learn to control who sees your posts and information! Adjust these privacy settings:</p>
+                        <div style="background: #f8f9fa; border-radius: 15px; padding: 25px; margin: 20px 0;">
+                            <h5>📱 Social Media Privacy Dashboard</h5>
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                                <div class="interactive-element" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>👀 Who can see your posts?</strong><br>
+                                        <small>Control who sees what you share</small>
+                                    </div>
+                                    <select id="postVisibility" onchange="updatePrivacyScore()" style="padding: 8px; border-radius: 5px; border: 2px solid #ddd;">
+                                        <option value="public">🌍 Everyone (Public)</option>
+                                        <option value="friends">👥 Friends Only</option>
+                                        <option value="close">❤️ Close Friends</option>
+                                    </select>
+                                </div>
+                                <div class="interactive-element" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>📧 Who can message you?</strong><br>
+                                        <small>Control who can send you direct messages</small>
+                                    </div>
+                                    <select id="messageSettings" onchange="updatePrivacyScore()" style="padding: 8px; border-radius: 5px; border: 2px solid #ddd;">
+                                        <option value="everyone">🌍 Anyone</option>
+                                        <option value="friends">👥 Friends Only</option>
+                                        <option value="none">🚫 No One</option>
+                                    </select>
+                                </div>
+                                <div class="interactive-element" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>📍 Location sharing</strong><br>
+                                        <small>Share your location with posts</small>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input type="checkbox" id="locationSharing" onchange="updatePrivacyScore()" style="opacity: 0; width: 0; height: 0;">
+                                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                    </label>
+                                </div>
+                                <div class="interactive-element" style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🔍 Profile searchability</strong><br>
+                                        <small>Let search engines find your profile</small>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input type="checkbox" id="searchable" onchange="updatePrivacyScore()" style="opacity: 0; width: 0; height: 0;">
+                                        <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="privacyLevel" style="text-align: center; margin: 20px 0; padding: 15px; border-radius: 10px; font-weight: bold;">
+                                Privacy Level: <span id="privacyText">Public 📢</span>
+                            </div>
+                            <button class="challenge-button" onclick="completePrivacySettings()">Apply Privacy Settings</button>
+                        </div>
+                    `;
+                
+                case 'sharing_quiz':
+                    return `
+                        <h4>📸 What Should You Share? Quiz Time!</h4>
+                        <p>For each item, decide if it's SAFE or RISKY to share on social media:</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-right: 15px;">🏠</div>
+                                    <div>
+                                        <strong>Your home address and house number</strong><br>
+                                        <small>"Just moved to 123 Oak Street, come visit!"</small>
+                                    </div>
+                                </div>
+                                <button class="challenge-button" onclick="checkSharingChoice(1, 'safe')" style="background: #4CAF50; font-size: 0.9rem;">SAFE to Share</button>
+                                <button class="challenge-button" onclick="checkSharingChoice(1, 'risky')" style="background: #f44336; font-size: 0.9rem;">RISKY to Share</button>
+                                <div id="sharingResult1"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-right: 15px;">🎂</div>
+                                    <div>
+                                        <strong>Your birthday celebration photos</strong><br>
+                                        <small>"Having an amazing 25th birthday party!"</small>
+                                    </div>
+                                </div>
+                                <button class="challenge-button" onclick="checkSharingChoice(2, 'safe')" style="background: #4CAF50; font-size: 0.9rem;">SAFE to Share</button>
+                                <button class="challenge-button" onclick="checkSharingChoice(2, 'risky')" style="background: #f44336; font-size: 0.9rem;">RISKY to Share</button>
+                                <div id="sharingResult2"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-right: 15px;">✈️</div>
+                                    <div>
+                                        <strong>Vacation photos while you're away</strong><br>
+                                        <small>"Day 3 in Hawaii! House is empty for 2 more weeks!"</small>
+                                    </div>
+                                </div>
+                                <button class="challenge-button" onclick="checkSharingChoice(3, 'safe')" style="background: #4CAF50; font-size: 0.9rem;">SAFE to Share</button>
+                                <button class="challenge-button" onclick="checkSharingChoice(3, 'risky')" style="background: #f44336; font-size: 0.9rem;">RISKY to Share</button>
+                                <div id="sharingResult3"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-right: 15px;">🍕</div>
+                                    <div>
+                                        <strong>Photo of your lunch</strong><br>
+                                        <small>"This pizza looks amazing! #foodie"</small>
+                                    </div>
+                                </div>
+                                <button class="challenge-button" onclick="checkSharingChoice(4, 'safe')" style="background: #4CAF50; font-size: 0.9rem;">SAFE to Share</button>
+                                <button class="challenge-button" onclick="checkSharingChoice(4, 'risky')" style="background: #f44336; font-size: 0.9rem;">RISKY to Share</button>
+                                <div id="sharingResult4"></div>
+                            </div>
+                        </div>
+                        <div id="sharingScore" style="text-align: center; margin: 20px 0; font-size: 1.2rem; font-weight: bold;"></div>
+                    `;
+                
+                case 'fake_profiles':
+                    return `
+                        <h4>🎭 Fake Profile Detective Challenge!</h4>
+                        <p>Examine these profiles and spot the fake ones! Look for suspicious signs:</p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+                            <div class="interactive-element profile-card" onclick="analyzeProfile('real')" style="cursor: pointer; border: 2px solid #ddd;">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="width: 60px; height: 60px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 15px;">👨</div>
+                                    <div>
+                                        <strong>Mike Johnson</strong><br>
+                                        <small>📍 Chicago, IL • Joined 2019</small><br>
+                                        <small>👥 324 friends • 📸 89 photos</small>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.9rem; color: #666;">
+                                    "Love hiking and photography! Dad of two amazing kids. Work at local bank."
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.8rem; color: #999;">
+                                    Recent posts about family, work events, local hiking spots
+                                </div>
+                            </div>
+                            <div class="interactive-element profile-card" onclick="analyzeProfile('fake1')" style="cursor: pointer; border: 2px solid #ddd;">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="width: 60px; height: 60px; background: #ff6b6b; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 15px;">👩</div>
+                                    <div>
+                                        <strong>Jessica Beauty</strong><br>
+                                        <small>📍 New York • Joined yesterday</small><br>
+                                        <small>👥 0 friends • 📸 1 photo</small>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.9rem; color: #666;">
+                                    "Hey handsome! Click my link for amazing deals! Make money fast! 💰💰💰"
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.8rem; color: #999;">
+                                    Only post: "Check out this amazing opportunity!!!"
+                                </div>
+                            </div>
+                            <div class="interactive-element profile-card" onclick="analyzeProfile('fake2')" style="cursor: pointer; border: 2px solid #ddd;">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="width: 60px; height: 60px; background: #ff9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-right: 15px;">👨</div>
+                                    <div>
+                                        <strong>John Smith</strong><br>
+                                        <small>📍 London • Joined 2020</small><br>
+                                        <small>👥 5,000 friends • 📸 3 photos</small>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.9rem; color: #666;">
+                                    "Investment expert. Trust me with your money. Guaranteed returns!"
+                                </div>
+                                <div style="margin-top: 10px; font-size: 0.8rem; color: #999;">
+                                    All photos look like stock photos, friends from all over the world
+                                </div>
+                            </div>
+                        </div>
+                        <div id="profileAnalysis" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; min-height: 100px;">
+                            Click on each profile above to analyze it for suspicious signs!
+                        </div>
+                        <div id="profileScore" style="text-align: center; margin: 20px 0; font-size: 1.2rem; font-weight: bold;"></div>
+                    `;
+                
+                case 'digital_footprint':
+                    return `
+                        <h4>🛡️ Digital Footprint Cleanup Lab!</h4>
+                        <p>Your digital footprint is all the traces you leave online. Let's clean it up! Check each area:</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element cleanup-item" onclick="cleanupArea('old-posts')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🗂️ Old Embarrassing Posts</strong><br>
+                                        <small>Posts from years ago that don't represent you well</small>
+                                    </div>
+                                    <div id="cleanup-old-posts" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="result-old-posts" style="margin-top: 10px; display: none;"></div>
+                            </div>
+                            <div class="interactive-element cleanup-item" onclick="cleanupArea('tagged-photos')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>📸 Tagged Photos Review</strong><br>
+                                        <small>Photos others tagged you in that you might not want public</small>
+                                    </div>
+                                    <div id="cleanup-tagged-photos" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="result-tagged-photos" style="margin-top: 10px; display: none;"></div>
+                            </div>
+                            <div class="interactive-element cleanup-item" onclick="cleanupArea('personal-info')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🔒 Personal Information Audit</strong><br>
+                                        <small>Remove phone numbers, addresses, and sensitive details</small>
+                                    </div>
+                                    <div id="cleanup-personal-info" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="result-personal-info" style="margin-top: 10px; display: none;"></div>
+                            </div>
+                            <div class="interactive-element cleanup-item" onclick="cleanupArea('friend-list')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>👥 Friend List Cleanup</strong><br>
+                                        <small>Remove people you don't actually know or trust</small>
+                                    </div>
+                                    <div id="cleanup-friend-list" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="result-friend-list" style="margin-top: 10px; display: none;"></div>
+                            </div>
+                            <div class="interactive-element cleanup-item" onclick="cleanupArea('app-permissions')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>📱 App Permissions Review</strong><br>
+                                        <small>Remove apps that have access to your social media</small>
+                                    </div>
+                                    <div id="cleanup-app-permissions" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="result-app-permissions" style="margin-top: 10px; display: none;"></div>
+                            </div>
+                        </div>
+                        <div id="cleanupProgress" style="text-align: center; margin: 20px 0;">
+                            <div style="background: #f0f0f0; border-radius: 10px; padding: 15px;">
+                                <strong>Cleanup Progress: <span id="cleanupCount">0</span>/5 areas cleaned</strong>
+                                <div style="width: 100%; height: 10px; background: #e0e0e0; border-radius: 5px; margin: 10px 0;">
+                                    <div id="cleanupBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); border-radius: 5px; transition: width 0.3s ease;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                
+                case 'malware_types':
+                    return `
+                        <h4>🦠 Meet the Digital Villains!</h4>
+                        <p>Learn about different types of malware and what they do. Click on each type to discover their secrets:</p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element" onclick="learnMalwareType('virus')" style="cursor: pointer; text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">🦠</div>
+                                <strong>Computer Virus</strong><br>
+                                <small>The classic spreader</small>
+                            </div>
+                            <div class="interactive-element" onclick="learnMalwareType('trojan')" style="cursor: pointer; text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">🐴</div>
+                                <strong>Trojan Horse</strong><br>
+                                <small>The sneaky imposter</small>
+                            </div>
+                            <div class="interactive-element" onclick="learnMalwareType('ransomware')" style="cursor: pointer; text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">🔒</div>
+                                <strong>Ransomware</strong><br>
+                                <small>The digital kidnapper</small>
+                            </div>
+                            <div class="interactive-element" onclick="learnMalwareType('spyware')" style="cursor: pointer; text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 10px;">👁️</div>
+                                <strong>Spyware</strong><br>
+                                <small>The secret watcher</small>
+                            </div>
+                        </div>
+                        <div id="malwareInfo" style="min-height: 120px;">
+                            Click on each malware type above to learn about it!
+                        </div>
+                    `;
+                
+                case 'infection_signs':
+                    return `
+                        <h4>🚨 Computer Health Check!</h4>
+                        <p>Your computer is acting strange! Which of these symptoms suggest a malware infection?</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-right: 15px;">🐌</div>
+                                    <div>
+                                        <strong>Computer running very slowly</strong><br>
+                                        <small>Takes forever to open programs and files</small>
+                                    </div>
+                                </div>
+                                <button class="challenge-button" onclick="checkInfectionSign(1, true)" style="background: #f44336; font-size: 0.9rem;">Warning Sign</button>
+                                <button class="challenge-button" onclick="checkInfectionSign(1, false)" style="background: #4CAF50; font-size: 0.9rem;">Normal Behavior</button>
+                                <div id="signResult1"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-right: 15px;">📱</div>
+                                    <div>
+                                        <strong>Getting a text message from a friend</strong><br>
+                                        <small>Normal text message on your phone</small>
+                                    </div>
+                                </div>
+                                <button class="challenge-button" onclick="checkInfectionSign(2, true)" style="background: #f44336; font-size: 0.9rem;">Warning Sign</button>
+                                <button class="challenge-button" onclick="checkInfectionSign(2, false)" style="background: #4CAF50; font-size: 0.9rem;">Normal Behavior</button>
+                                <div id="signResult2"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-right: 15px;">🚨</div>
+                                    <div>
+                                        <strong>Pop-ups claiming your computer is infected</strong><br>
+                                        <small>Scary warnings appearing everywhere</small>
+                                    </div>
+                                </div>
+                                <button class="challenge-button" onclick="checkInfectionSign(3, true)" style="background: #f44336; font-size: 0.9rem;">Warning Sign</button>
+                                <button class="challenge-button" onclick="checkInfectionSign(3, false)" style="background: #4CAF50; font-size: 0.9rem;">Normal Behavior</button>
+                                <div id="signResult3"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2rem; margin-right: 15px;">💰</div>
+                                    <div>
+                                        <strong>Programs asking for money to "fix" problems</strong><br>
+                                        <small>Software demanding payment for repairs</small>
+                                    </div>
+                                </div>
+                                <button class="challenge-button" onclick="checkInfectionSign(4, true)" style="background: #f44336; font-size: 0.9rem;">Warning Sign</button>
+                                <button class="challenge-button" onclick="checkInfectionSign(4, false)" style="background: #4CAF50; font-size: 0.9rem;">Normal Behavior</button>
+                                <div id="signResult4"></div>
+                            </div>
+                        </div>
+                        <div id="infectionScore" style="text-align: center; margin: 20px 0; font-size: 1.2rem; font-weight: bold;"></div>
+                    `;
+                
+                case 'antivirus_basics':
+                    return `
+                        <h4>🛡️ Your Digital Bodyguard!</h4>
+                        <p>Learn how antivirus software protects your computer! Click on each feature to see how it works:</p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element" onclick="demonstrateAntivirus('scan')" style="cursor: pointer; text-align: center;">
+                                <div style="font-size: 2.5rem; margin-bottom: 10px;">🔍</div>
+                                <strong>Real-Time Scanning</strong><br>
+                                <small>Always watching for threats</small>
+                            </div>
+                            <div class="interactive-element" onclick="demonstrateAntivirus('quarantine')" style="cursor: pointer; text-align: center;">
+                                <div style="font-size: 2.5rem; margin-bottom: 10px;">🏥</div>
+                                <strong>Quarantine</strong><br>
+                                <small>Isolates dangerous files</small>
+                            </div>
+                            <div class="interactive-element" onclick="demonstrateAntivirus('update')" style="cursor: pointer; text-align: center;">
+                                <div style="font-size: 2.5rem; margin-bottom: 10px;">🔄</div>
+                                <strong>Auto Updates</strong><br>
+                                <small>Learns about new threats</small>
+                            </div>
+                            <div class="interactive-element" onclick="demonstrateAntivirus('firewall')" style="cursor: pointer; text-align: center;">
+                                <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
+                                <strong>Firewall</strong><br>
+                                <small>Blocks unwanted connections</small>
+                            </div>
+                        </div>
+                        <div id="antivirusDemo" style="min-height: 120px; margin: 20px 0;">
+                            Click on each antivirus feature above to learn how it protects you!
+                        </div>
+                        <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                            <h5>💡 Pro Tip:</h5>
+                            <p>Free antivirus software like Windows Defender, Avast, or AVG provide good basic protection. The most important thing is to have SOME antivirus running!</p>
+                        </div>
+                        <button class="challenge-button" onclick="showSuccess('🎉 Great! You understand how antivirus software protects you!', 200)">Complete Antivirus Training</button>
+                    `;
+                
+                case 'safe_downloads':
+                    return `
+                        <h4>📥 Safe Downloading Academy!</h4>
+                        <p>Master the art of safe downloading! For each rule, decide if it's a GOOD or BAD practice:</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element">
+                                <div style="margin-bottom: 15px;">
+                                    <strong>Rule 1:</strong> Only download software from official websites
+                                    <br><small>Example: Getting Chrome from google.com/chrome</small>
+                                </div>
+                                <button class="challenge-button" onclick="checkDownloadRule(1, true)" style="background: #4CAF50; font-size: 0.9rem;">GOOD Practice</button>
+                                <button class="challenge-button" onclick="checkDownloadRule(1, false)" style="background: #f44336; font-size: 0.9rem;">BAD Practice</button>
+                                <div id="downloadResult1"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="margin-bottom: 15px;">
+                                    <strong>Rule 2:</strong> Click "Yes" to all download prompts without reading
+                                    <br><small>Example: Quickly clicking through all installation steps</small>
+                                </div>
+                                <button class="challenge-button" onclick="checkDownloadRule(2, true)" style="background: #4CAF50; font-size: 0.9rem;">GOOD Practice</button>
+                                <button class="challenge-button" onclick="checkDownloadRule(2, false)" style="background: #f44336; font-size: 0.9rem;">BAD Practice</button>
+                                <div id="downloadResult2"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="margin-bottom: 15px;">
+                                    <strong>Rule 3:</strong> Scan downloaded files with antivirus before opening
+                                    <br><small>Example: Right-click → "Scan with antivirus"</small>
+                                </div>
+                                <button class="challenge-button" onclick="checkDownloadRule(3, true)" style="background: #4CAF50; font-size: 0.9rem;">GOOD Practice</button>
+                                <button class="challenge-button" onclick="checkDownloadRule(3, false)" style="background: #f44336; font-size: 0.9rem;">BAD Practice</button>
+                                <div id="downloadResult3"></div>
+                            </div>
+                            <div class="interactive-element">
+                                <div style="margin-bottom: 15px;">
+                                    <strong>Rule 4:</strong> Download "free" software from random pop-up ads
+                                    <br><small>Example: "Download this amazing free game now!"</small>
+                                </div>
+                                <button class="challenge-button" onclick="checkDownloadRule(4, true)" style="background: #4CAF50; font-size: 0.9rem;">GOOD Practice</button>
+                                <button class="challenge-button" onclick="checkDownloadRule(4, false)" style="background: #f44336; font-size: 0.9rem;">BAD Practice</button>
+                                <div id="downloadResult4"></div>
+                            </div>
+                        </div>
+                        <div id="downloadScore" style="text-align: center; margin: 20px 0; font-size: 1.2rem; font-weight: bold;"></div>
+                    `;
+                
+                case 'system_cleanup':
+                    return `
+                        <h4>🔧 Computer Spa Day!</h4>
+                        <p>Give your computer a health makeover! Complete each cleanup task to optimize your system:</p>
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin: 20px 0;">
+                            <div class="interactive-element cleanup-item" onclick="performCleanup('temp-files')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🗑️ Delete Temporary Files</strong><br>
+                                        <small>Remove junk files that slow down your computer</small>
+                                    </div>
+                                    <div id="cleanup-temp-files" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="cleanupResult-temp-files" style="margin-top: 10px; display: none; color: #4CAF50; font-size: 0.9rem;">
+                                    ✅ Cleaned 2.3 GB of temporary files! Your computer will run faster now.
+                                </div>
+                            </div>
+                            <div class="interactive-element cleanup-item" onclick="performCleanup('browser-cache')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🌐 Clear Browser Cache</strong><br>
+                                        <small>Remove stored website data that can become corrupted</small>
+                                    </div>
+                                    <div id="cleanup-browser-cache" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="cleanupResult-browser-cache" style="margin-top: 10px; display: none; color: #4CAF50; font-size: 0.9rem;">
+                                    ✅ Cleared browser cache! Websites will load fresh content now.
+                                </div>
+                            </div>
+                            <div class="interactive-element cleanup-item" onclick="performCleanup('startup-programs')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🚀 Disable Unnecessary Startup Programs</strong><br>
+                                        <small>Stop programs from automatically starting with your computer</small>
+                                    </div>
+                                    <div id="cleanup-startup-programs" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="cleanupResult-startup-programs" style="margin-top: 10px; display: none; color: #4CAF50; font-size: 0.9rem;">
+                                    ✅ Disabled 8 unnecessary startup programs! Your computer will boot faster.
+                                </div>
+                            </div>
+                            <div class="interactive-element cleanup-item" onclick="performCleanup('disk-cleanup')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>💾 Run Disk Cleanup</strong><br>
+                                        <small>Free up space by removing old system files</small>
+                                    </div>
+                                    <div id="cleanup-disk-cleanup" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="cleanupResult-disk-cleanup" style="margin-top: 10px; display: none; color: #4CAF50; font-size: 0.9rem;">
+                                    ✅ Freed up 5.7 GB of disk space! More room for your important files.
+                                </div>
+                            </div>
+                            <div class="interactive-element cleanup-item" onclick="performCleanup('software-update')" style="cursor: pointer;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong>🔄 Update Software</strong><br>
+                                        <small>Install security patches and performance improvements</small>
+                                    </div>
+                                    <div id="cleanup-software-update" style="font-size: 1.5rem;">❌</div>
+                                </div>
+                                <div id="cleanupResult-software-update" style="margin-top: 10px; display: none; color: #4CAF50; font-size: 0.9rem;">
+                                    ✅ Updated 12 programs! Your software is now secure and optimized.
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div style="background: #f0f0f0; border-radius: 10px; padding: 15px;">
+                                <strong>System Cleanup Progress</strong>
+                                <div style="width: 100%; height: 15px; background: #e0e0e0; border-radius: 8px; margin: 10px 0;">
+                                    <div id="systemCleanupProgress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); border-radius: 8px; transition: width 0.3s ease;"></div>
+                                </div>
+                                <div style="font-size: 0.9rem; color: #666;">Click each task above to clean your system!</div>
+                            </div>
+                        </div>
+                    `;
+                
+                default:
+                    return `
+                        <h4>Coming Soon!</h4>
+                        <p>This stage is being prepared for you. Check back soon!</p>
+                        <button class="challenge-button" onclick="nextStage()">Continue</button>
+                    `;
+            }
+        }
+
+        // Interactive functions
+        let currentPassword = '';
+        let passwordElements = [];
+
+        function addToPassword(text, icon) {
+            currentPassword += text;
+            passwordElements.push(icon);
+            document.getElementById('passwordHouse').innerHTML = currentPassword + ' ' + passwordElements.join('');
+            updatePasswordStrength();
+        }
+
+        function clearPassword() {
+            currentPassword = '';
+            passwordElements = [];
+            document.getElementById('passwordHouse').innerHTML = 'Your password will appear here...';
+            document.getElementById('strengthLevel').textContent = 'Weak 🏚️';
+        }
+
+        function updatePasswordStrength() {
+            const strength = passwordElements.length;
+            const strengthElement = document.getElementById('strengthLevel');
+            
+            if (strength === 1) strengthElement.textContent = 'Weak 🏚️';
+            else if (strength === 2) strengthElement.textContent = 'Getting Better 🏠';
+            else if (strength === 3) strengthElement.textContent = 'Strong 🏰';
+            else if (strength === 4) strengthElement.textContent = 'Super Strong 🏛️';
+        }
+
+        function checkPasswordHouse() {
+            if (passwordElements.length >= 3) {
+                showSuccess("🎉 Amazing! You built a strong password house!", 200);
+            } else {
+                showError("Your house needs more materials to be strong! Add more types of characters.");
+            }
+        }
+
+        function testPassword(password) {
+            const results = document.getElementById('testResults');
+            let strength = '';
+            let color = '';
+            let explanation = '';
+            
+            if (password === 'password') {
+                strength = 'Very Weak 😰';
+                color = '#ff4444';
+                explanation = 'This is a common password that hackers can guess in seconds!';
+            } else if (password === 'Password123') {
+                strength = 'Weak 😐';
+                color = '#ff9800';
+                explanation = 'Better, but still predictable. Hackers have lists of passwords like this.';
+            } else if (password === 'MyDog$Loves2Play!') {
+                strength = 'Very Strong 💪';
+                color = '#4CAF50';
+                explanation = 'Excellent! Long, unique, and has all types of characters!';
+            }
+            
+            results.innerHTML = `
+                <div style="color: ${color}; font-size: 1.2rem; font-weight: bold;">${strength}</div>
+                <div style="margin-top: 10px;">${explanation}</div>
+            `;
+        }
+
+        function completeStrengthTest() {
+            showSuccess("🎉 Great job learning about password strength!", 150);
+        }
+
+        function updateShiftPreview() {
+            const shift = parseInt(document.getElementById('shiftSlider').value);
+            document.getElementById('shiftAmount').textContent = shift;
+            
+            const encoded = 'JBYYB';
+            let decoded = '';
+            
+            for (let char of encoded) {
+                let code = char.charCodeAt(0) - shift;
+                if (code < 65) code += 26;
+                decoded += String.fromCharCode(code);
+            }
+            
+            document.getElementById('shiftResult').textContent = decoded;
+        }
+
+        function checkShiftAnswer() {
+            const result = document.getElementById('shiftResult').textContent;
+            if (result === 'HELLO') {
+                showSuccess("🎉 Perfect! You found the right shift amount!", 200);
+            } else {
+                showError("Keep trying different shift amounts until you get a real word!");
+            }
+        }
+
+        // Drag and drop functions
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.target.classList.add('drag-over');
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.textContent);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            ev.target.classList.remove('drag-over');
+            const data = ev.dataTransfer.getData("text");
+            const answer = ev.target.getAttribute('data-answer');
+            
+            if (data === answer) {
+                ev.target.innerHTML = `<div style="color: #4CAF50; font-weight: bold;">${data} ✓</div>`;
+                ev.target.style.background = '#E8F5E8';
+            } else {
+                ev.target.innerHTML = `<div style="color: #f44336;">${data} ✗</div>`;
+                ev.target.style.background = '#FFEBEE';
+            }
+        }
+
+        function checkSubstitution() {
+            const dropAreas = document.querySelectorAll('.drag-drop-area');
+            let correct = 0;
+            
+            dropAreas.forEach(area => {
+                if (area.style.background === 'rgb(232, 245, 232)') {
+                    correct++;
+                }
+            });
+            
+            if (correct === 3) {
+                showSuccess("🎉 Excellent! You mastered letter substitution!", 250);
+            } else {
+                showError("Some letters aren't in the right place. Try again!");
+            }
+        }
+
+        // Stage progression
+        function nextStage() {
+            if (gameState.currentStage < gameState.maxStages) {
+                gameState.currentStage++;
+                loadStageContent();
+            } else {
+                completeModule();
+            }
+        }
+
+        function completeModule() {
+            const module = modules[gameState.currentModule];
+            userStats.points += module.points;
+            userStats.completedModules++;
+            
+            document.getElementById('totalPoints').textContent = userStats.points;
+            document.getElementById('completedModules').textContent = userStats.completedModules;
+            
+            setTimeout(() => {
+                closeModal();
+                showModuleCompletionAnimation();
+            }, 2000);
+        }
+
+        // Feedback functions
+        function showSuccess(message, points) {
+            document.getElementById('feedback').innerHTML = `
+                <div class="feedback success">
+                    ${message}<br>
+                    <strong>+${points} points earned!</strong>
+                </div>
+            `;
+            
+            userStats.points += points;
+            document.getElementById('totalPoints').textContent = userStats.points;
+            
+            setTimeout(() => {
+                if (gameState.currentStage < gameState.maxStages) {
+                    document.getElementById('feedback').innerHTML += `
+                        <div style="margin-top: 15px;">
+                            <button class="challenge-button" onclick="nextStage()">Continue to Next Stage →</button>
+                        </div>
+                    `;
+                } else {
+                    setTimeout(() => {
+                        completeModule();
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function showError(message) {
+            document.getElementById('feedback').innerHTML = `
+                <div class="feedback error">
+                    ❌ ${message}
+                </div>
+            `;
+        }
+
+        function checkAnswer(inputId, correctAnswer, points) {
+            let userAnswer = '';
+            
+            if (inputId === 'manager') {
+                userAnswer = correctAnswer; // For button-based answers
+            } else {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    userAnswer = input.value.toUpperCase().trim();
+                }
+            }
+            
+            if (userAnswer === correctAnswer.toUpperCase() || userAnswer === correctAnswer) {
+                showSuccess(`🎉 Correct! Well done!`, points);
+            } else {
+                showError("Not quite right. Try again!");
+            }
+        }
+
+        function showModuleCompletionAnimation() {
+            const completion = document.createElement('div');
+            completion.innerHTML = `🏆 Module Complete! Great job learning! 🏆`;
+            completion.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #4CAF50, #45a049);
+                color: white;
+                padding: 25px 50px;
+                border-radius: 15px;
+                font-size: 1.8rem;
+                font-weight: bold;
+                z-index: 2000;
+                animation: celebrationPulse 3s ease-in-out;
+                text-align: center;
+            `;
+            
+            document.body.appendChild(completion);
+            setTimeout(() => completion.remove(), 3000);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('simulationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Email Detective Functions
+        function analyzeEmail(type) {
+            const analysis = document.getElementById('emailAnalysis');
+            if (type === 'good') {
+                analysis.innerHTML = `
+                    <div style="color: #4CAF50; font-weight: bold; margin-bottom: 15px;">✅ LEGITIMATE EMAIL</div>
+                    <div><strong>Why it's safe:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>From official Amazon domain (@amazon.com)</li>
+                        <li>Professional, calm tone</li>
+                        <li>Specific order number provided</li>
+                        <li>No urgent threats or pressure</li>
+                    </ul>
+                `;
+            } else {
+                analysis.innerHTML = `
+                    <div style="color: #f44336; font-weight: bold; margin-bottom: 15px;">❌ SUSPICIOUS EMAIL</div>
+                    <div><strong>Red flags:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Misspelled domain (amazom instead of amazon)</li>
+                        <li>Uses Gmail instead of official domain</li>
+                        <li>Excessive urgency and threats</li>
+                        <li>Generic greeting "Dear Customer"</li>
+                    </ul>
+                `;
+            }
+        }
+
+        function completeEmailBasics() {
+            showSuccess("🎉 Great job! You can now spot the difference between real and fake emails!", 150);
+        }
+
+        // Clue Hunting Functions
+        let foundClues = [];
+        const clueExplanations = {
+            sender: "Wrong domain! PayPal uses 'paypal.com', not 'payp4l.com'",
+            urgent: "Excessive urgency is a red flag - real companies don't use multiple exclamation marks",
+            threat: "Legitimate companies don't threaten to close accounts forever",
+            link: "Suspicious URL - real PayPal links go to paypal.com domains",
+            grammar: "Poor grammar: 'You're' should be 'Your' and 'informations' isn't correct"
+        };
+
+        function foundClue(clueType) {
+            if (!foundClues.includes(clueType)) {
+                foundClues.push(clueType);
+                document.getElementById('cluesFound').textContent = foundClues.length;
+                
+                const results = document.getElementById('clueResults');
+                results.innerHTML += `
+                    <div style="background: #e8f5e8; padding: 10px; border-radius: 8px; margin: 5px 0; border-left: 4px solid #4CAF50;">
+                        <strong>Clue Found!</strong> ${clueExplanations[clueType]}
+                    </div>
+                `;
+                
+                if (foundClues.length === 5) {
+                    setTimeout(() => {
+                        showSuccess("🎉 Amazing detective work! You found all the suspicious clues!", 250);
+                    }, 1000);
+                }
+            }
+        }
+
+        // Website Comparison Functions
+        function checkWebsite(choice) {
+            if (choice === 'real') {
+                showSuccess("🎉 Correct! Always choose websites with HTTPS, correct spelling, and official domains!", 200);
+            } else {
+                showError("That's the fake website! Look for HTTPS, correct spelling, and official domains.");
+            }
+        }
+
+        // Protection Methods Functions
+        let protectionScore = 0;
+        function matchProtection(situation, choice) {
+            const correctAnswers = {1: 'ignore', 2: 'hover', 3: 'delete'};
+            const resultDiv = document.getElementById(`result${situation}`);
+            
+            if (choice === correctAnswers[situation]) {
+                resultDiv.innerHTML = `<div style="color: #4CAF50; margin-top: 10px;">✅ Correct! Great security thinking!</div>`;
+                protectionScore++;
+            } else {
+                resultDiv.innerHTML = `<div style="color: #f44336; margin-top: 10px;">❌ Not the best choice. Try again!</div>`;
+            }
+            
+            if (protectionScore === 3) {
+                document.getElementById('protectionScore').innerHTML = `🏆 Perfect Score! You're an email security expert!`;
+                setTimeout(() => {
+                    showSuccess("🎉 Excellent! You've mastered email protection strategies!", 300);
+                }, 1500);
+            }
+        }
+
+        // Internet Journey Functions
+        let stepsLearned = 0;
+        const stepExplanations = {
+            1: {
+                title: "💻 Your Computer Sends the Request",
+                content: "When you type a website address, your computer creates a request message asking for that webpage. It's like writing a letter asking for information!"
+            },
+            2: {
+                title: "📡 Your Internet Provider Receives It",
+                content: "Your Internet Service Provider (ISP) is like the post office. They take your request and figure out the best route to send it across the internet highways."
+            },
+            3: {
+                title: "🌐 Traveling the Internet Highways",
+                content: "Your request travels through many different networks and routers, like taking different highways and roads to reach its destination. It might visit several countries in milliseconds!"
+            },
+            4: {
+                title: "🏢 Website Server Responds",
+                content: "The website's server computer receives your request, finds the webpage you want, and sends it back to you through the same network of highways!"
+            }
+        };
+
+        function showStep(stepNumber) {
+            const explanation = document.getElementById('stepExplanation');
+            const step = stepExplanations[stepNumber];
+            
+            explanation.innerHTML = `
+                <h5 style="color: #667eea; margin-bottom: 15px;">${step.title}</h5>
+                <p style="font-size: 1.1rem; line-height: 1.6;">${step.content}</p>
+            `;
+            
+            document.getElementById(`step${stepNumber}`).style.background = '#e8f5e8';
+            
+            if (!document.getElementById(`step${stepNumber}`).classList.contains('learned')) {
+                document.getElementById(`step${stepNumber}`).classList.add('learned');
+                stepsLearned++;
+                document.getElementById('stepsCompleted').textContent = stepsLearned;
+                
+                if (stepsLearned === 4) {
+                    setTimeout(() => {
+                        showSuccess("🎉 Fantastic! You understand how the internet works!", 200);
+                    }, 1000);
+                }
+            }
+        }
+
+        // HTTPS vs HTTP Functions
+        function demonstrateSecurity(type) {
+            const demo = document.getElementById('securityDemo');
+            
+            if (type === 'http') {
+                demo.innerHTML = `
+                    <div style="color: #f44336; font-weight: bold; margin-bottom: 15px;">⚠️ HTTP Security Risks</div>
+                    <div style="background: #ffebee; padding: 15px; border-radius: 8px;">
+                        <div><strong>What hackers can see:</strong></div>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Your passwords in plain text</li>
+                            <li>Personal information you type</li>
+                            <li>Which websites you visit</li>
+                            <li>Your private messages</li>
+                        </ul>
+                        <div style="margin-top: 15px; font-style: italic;">
+                            "It's like sending a postcard - anyone can read it!"
+                        </div>
+                    </div>
+                `;
+            } else {
+                demo.innerHTML = `
+                    <div style="color: #4CAF50; font-weight: bold; margin-bottom: 15px;">🔒 HTTPS Security Protection</div>
+                    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px;">
+                        <div><strong>How HTTPS protects you:</strong></div>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>Encrypts all your data</li>
+                            <li>Verifies the website is real</li>
+                            <li>Prevents data tampering</li>
+                            <li>Keeps your information private</li>
+                        </ul>
+                        <div style="margin-top: 15px; font-style: italic;">
+                            "It's like sending a letter in a locked safe!"
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // WiFi Safety Functions
+        function chooseWifi(type) {
+            const result = document.getElementById('wifiResult');
+            
+            if (type === 'free') {
+                result.innerHTML = `
+                    <div style="color: #f44336; font-weight: bold; margin-bottom: 15px;">⚠️ RISKY CHOICE</div>
+                    <div><strong>Why this is dangerous:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Anyone can see your internet activity</li>
+                        <li>Hackers can steal your passwords</li>
+                        <li>No protection for your personal data</li>
+                        <li>Could be a fake network set up by criminals</li>
+                    </ul>
+                    <div style="background: #ffebee; padding: 10px; border-radius: 8px; margin-top: 15px;">
+                        <strong>Better choice:</strong> Use the coffee shop's official WiFi or your phone's hotspot!
+                    </div>
+                `;
+            } else if (type === 'coffee') {
+                result.innerHTML = `
+                    <div style="color: #FF9800; font-weight: bold; margin-bottom: 15px;">⚠️ BETTER, BUT BE CAREFUL</div>
+                    <div><strong>This is safer because:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Password protection adds some security</li>
+                        <li>Official network from the business</li>
+                        <li>Less likely to be a fake network</li>
+                    </ul>
+                    <div><strong>But still be careful:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Don't access sensitive accounts (banking)</li>
+                        <li>Make sure websites use HTTPS</li>
+                        <li>Consider using a VPN for extra protection</li>
+                    </ul>
+                `;
+            } else {
+                result.innerHTML = `
+                    <div style="color: #4CAF50; font-weight: bold; margin-bottom: 15px;">✅ SAFEST CHOICE!</div>
+                    <div><strong>Why your hotspot is best:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>You control the network completely</li>
+                        <li>No strangers can access your connection</li>
+                        <li>Uses your phone's security settings</li>
+                        <li>No risk of fake networks</li>
+                    </ul>
+                    <div style="background: #e8f5e8; padding: 10px; border-radius: 8px; margin-top: 15px;">
+                        <strong>Pro tip:</strong> When possible, always use your own mobile hotspot for the highest security!
+                    </div>
+                `;
+                setTimeout(() => {
+                    showSuccess("🎉 Perfect choice! You understand WiFi safety!", 200);
+                }, 1500);
+            }
+        }
+
+        // Link Safety Functions
+        let linkSafetyScore = 0;
+        function revealLink(linkNum, url) {
+            document.getElementById(`linkReveal${linkNum}`).textContent = `Real destination: ${url}`;
+        }
+
+        function judgeLink(linkNum, safety) {
+            const correctAnswers = {1: 'unsafe', 2: 'safe', 3: 'unsafe'};
+            const resultDiv = document.getElementById(`linkResult${linkNum}`);
+            
+            if (safety === correctAnswers[linkNum]) {
+                resultDiv.innerHTML = `<div style="color: #4CAF50; margin-top: 10px;">✅ Correct judgment!</div>`;
+                linkSafetyScore++;
+            } else {
+                resultDiv.innerHTML = `<div style="color: #f44336; margin-top: 10px;">❌ Look more carefully at the URL!</div>`;
+            }
+            
+            if (linkSafetyScore === 3) {
+                document.getElementById('linkSafetyScore').innerHTML = `🏆 Perfect! You're a link safety expert!`;
+                setTimeout(() => {
+                    showSuccess("🎉 Excellent! You can now spot dangerous links!", 250);
+                }, 1500);
+            }
+        }
+
+        // Browser Security Functions
+        function updateSecurity() {
+            const popup = document.getElementById('popupBlocker').checked;
+            const https = document.getElementById('httpsOnly').checked;
+            const safe = document.getElementById('safeBrowsing').checked;
+            const cookies = document.getElementById('cookieBlocker').checked;
+            
+            const securityCount = [popup, https, safe, cookies].filter(Boolean).length;
+            const levelElement = document.getElementById('levelText');
+            const securityDiv = document.getElementById('securityLevel');
+            
+            if (securityCount === 0) {
+                levelElement.textContent = 'Basic 🔓';
+                securityDiv.style.background = '#ffebee';
+            } else if (securityCount <= 2) {
+                levelElement.textContent = 'Good 🔒';
+                securityDiv.style.background = '#fff3e0';
+            } else if (securityCount === 3) {
+                levelElement.textContent = 'Strong 🛡️';
+                securityDiv.style.background = '#e8f5e8';
+            } else {
+                levelElement.textContent = 'Maximum 🏰';
+                securityDiv.style.background = '#e8f5e8';
+            }
+        }
+
+        function completeBrowserSecurity() {
+            const securityCount = [
+                document.getElementById('popupBlocker').checked,
+                document.getElementById('httpsOnly').checked,
+                document.getElementById('safeBrowsing').checked,
+                document.getElementById('cookieBlocker').checked
+            ].filter(Boolean).length;
+            
+            if (securityCount >= 3) {
+                showSuccess("🎉 Excellent security setup! Your browser is now well protected!", 200);
+            } else {
+                showError("Try enabling more security features for better protection!");
+            }
+        }
+
+        // Social Media Shield Functions
+        function updatePrivacyScore() {
+            const postVisibility = document.getElementById('postVisibility').value;
+            const messageSettings = document.getElementById('messageSettings').value;
+            const locationSharing = document.getElementById('locationSharing').checked;
+            const searchable = document.getElementById('searchable').checked;
+            
+            let privacyScore = 0;
+            if (postVisibility === 'friends' || postVisibility === 'close') privacyScore++;
+            if (messageSettings === 'friends') privacyScore++;
+            if (!locationSharing) privacyScore++;
+            if (!searchable) privacyScore++;
+            
+            const levelElement = document.getElementById('privacyText');
+            const privacyDiv = document.getElementById('privacyLevel');
+            
+            if (privacyScore === 0) {
+                levelElement.textContent = 'Public 📢';
+                privacyDiv.style.background = '#ffebee';
+            } else if (privacyScore <= 2) {
+                levelElement.textContent = 'Protected 🔒';
+                privacyDiv.style.background = '#fff3e0';
+            } else if (privacyScore === 3) {
+                levelElement.textContent = 'Private 🔐';
+                privacyDiv.style.background = '#e8f5e8';
+            } else {
+                levelElement.textContent = 'Maximum Privacy 🏰';
+                privacyDiv.style.background = '#e8f5e8';
+            }
+        }
+
+        function completePrivacySettings() {
+            const privacyCount = [
+                document.getElementById('postVisibility').value !== 'public',
+                document.getElementById('messageSettings').value === 'friends',
+                !document.getElementById('locationSharing').checked,
+                !document.getElementById('searchable').checked
+            ].filter(Boolean).length;
+            
+            if (privacyCount >= 3) {
+                showSuccess("🎉 Great privacy setup! Your social media is now much safer!", 200);
+            } else {
+                showError("Try adjusting more settings for better privacy protection!");
+            }
+        }
+
+        // Sharing Quiz Functions
+        let sharingScore = 0;
+        function checkSharingChoice(questionNum, choice) {
+            const correctAnswers = {1: 'risky', 2: 'risky', 3: 'risky', 4: 'safe'};
+            const resultDiv = document.getElementById(`sharingResult${questionNum}`);
+            
+            if (choice === correctAnswers[questionNum]) {
+                resultDiv.innerHTML = `<div style="color: #4CAF50; margin-top: 10px;">✅ Correct! Good privacy thinking!</div>`;
+                sharingScore++;
+            } else {
+                resultDiv.innerHTML = `<div style="color: #f44336; margin-top: 10px;">❌ Think about who could use this information!</div>`;
+            }
+            
+            if (sharingScore === 4) {
+                document.getElementById('sharingScore').innerHTML = `🏆 Perfect! You know what's safe to share!`;
+                setTimeout(() => {
+                    showSuccess("🎉 Excellent! You understand social media sharing safety!", 200);
+                }, 1500);
+            }
+        }
+
+        // Fake Profile Functions
+        let profilesAnalyzed = 0;
+        function analyzeProfile(type) {
+            const analysis = document.getElementById('profileAnalysis');
+            profilesAnalyzed++;
+            
+            if (type === 'real') {
+                analysis.innerHTML = `
+                    <div style="color: #4CAF50; font-weight: bold; margin-bottom: 15px;">✅ LEGITIMATE PROFILE</div>
+                    <div><strong>Signs this profile is real:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Account created years ago (established history)</li>
+                        <li>Reasonable number of friends and photos</li>
+                        <li>Personal, authentic-sounding bio</li>
+                        <li>Posts about normal life activities</li>
+                    </ul>
+                `;
+            } else if (type === 'fake1') {
+                analysis.innerHTML = `
+                    <div style="color: #f44336; font-weight: bold; margin-bottom: 15px;">❌ FAKE PROFILE</div>
+                    <div><strong>Red flags:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Brand new account (created yesterday)</li>
+                        <li>No friends or connections</li>
+                        <li>Bio focused on money/deals</li>
+                        <li>Generic name and suspicious content</li>
+                    </ul>
+                `;
+            } else {
+                analysis.innerHTML = `
+                    <div style="color: #f44336; font-weight: bold; margin-bottom: 15px;">❌ FAKE PROFILE</div>
+                    <div><strong>Red flags:</strong></div>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li>Too many friends (5,000 is suspicious)</li>
+                        <li>Very few photos for old account</li>
+                        <li>Generic name "John Smith"</li>
+                        <li>Promises guaranteed money returns</li>
+                    </ul>
+                `;
+            }
+            
+            if (profilesAnalyzed === 3) {
+                setTimeout(() => {
+                    showSuccess("🎉 Great detective work! You can spot fake profiles!", 250);
+                }, 1500);
+            }
+        }
+
+        // Digital Footprint Cleanup Functions
+        let cleanupCount = 0;
+        function cleanupArea(area) {
+            const checkmark = document.getElementById(`cleanup-${area}`);
+            const result = document.getElementById(`result-${area}`);
+            
+            if (checkmark.textContent === '❌') {
+                checkmark.textContent = '✅';
+                checkmark.style.color = '#4CAF50';
+                result.style.display = 'block';
+                result.style.color = '#4CAF50';
+                cleanupCount++;
+                
+                const explanations = {
+                    'old-posts': '✅ Reviewed and removed 15 old posts that could be embarrassing!',
+                    'tagged-photos': '✅ Untagged yourself from 8 photos you didn\'t want public!',
+                    'personal-info': '✅ Removed phone number and address from your profile!',
+                    'friend-list': '✅ Removed 23 people you don\'t actually know!',
+                    'app-permissions': '✅ Revoked access for 12 apps you no longer use!'
+                };
+                
+                result.textContent = explanations[area];
+                
+                document.getElementById('cleanupCount').textContent = cleanupCount;
+                document.getElementById('cleanupBar').style.width = `${(cleanupCount / 5) * 100}%`;
+                
+                if (cleanupCount === 5) {
+                    setTimeout(() => {
+                        showSuccess("🎉 Amazing! Your digital footprint is now clean and safe!", 300);
+                    }, 1000);
+                }
+            }
+        }
+
+        // Malware Functions
+        function learnMalwareType(type) {
+            const info = document.getElementById('malwareInfo');
+            
+            const malwareInfo = {
+                virus: {
+                    title: '🦠 Computer Virus',
+                    description: 'Like a biological virus, it spreads by copying itself to other files and programs. It can corrupt your data and slow down your computer.',
+                    example: 'Attaches to email attachments and spreads when you open infected files.'
+                },
+                trojan: {
+                    title: '🐴 Trojan Horse',
+                    description: 'Pretends to be helpful software but secretly does bad things. Named after the famous wooden horse from ancient Troy!',
+                    example: 'Looks like a free game download but actually steals your passwords.'
+                },
+                ransomware: {
+                    title: '🔒 Ransomware',
+                    description: 'Locks up all your files and demands money to unlock them. It\'s like a digital kidnapper holding your data hostage!',
+                    example: 'Encrypts your photos and documents, then asks for payment to get them back.'
+                },
+                spyware: {
+                    title: '👁️ Spyware',
+                    description: 'Secretly watches everything you do on your computer and reports back to criminals. It\'s like having an invisible spy in your room!',
+                    example: 'Records your keystrokes to steal passwords and credit card numbers.'
+                }
+            };
+            
+            const malware = malwareInfo[type];
+            info.innerHTML = `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                    <h5 style="color: #667eea; margin-bottom: 15px;">${malware.title}</h5>
+                    <p style="margin-bottom: 15px; font-size: 1.1rem;">${malware.description}</p>
+                    <div style="background: #fff3e0; padding: 15px; border-radius: 8px;">
+                        <strong>Example:</strong> ${malware.example}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Infection Signs Functions
+        let infectionScore = 0;
+        function checkInfectionSign(signNum, isWarning) {
+            const correctAnswers = {1: true, 2: false, 3: true, 4: true};
+            const resultDiv = document.getElementById(`signResult${signNum}`);
+            
+            if (isWarning === correctAnswers[signNum]) {
+                resultDiv.innerHTML = `<div style="color: #4CAF50; margin-top: 10px;">✅ Correct assessment!</div>`;
+                infectionScore++;
+            } else {
+                resultDiv.innerHTML = `<div style="color: #f44336; margin-top: 10px;">❌ Think about whether this is normal computer behavior!</div>`;
+            }
+            
+            if (infectionScore === 4) {
+                document.getElementById('infectionScore').innerHTML = `🏆 Perfect! You can spot infection signs!`;
+                setTimeout(() => {
+                    showSuccess("🎉 Excellent! You know the warning signs of malware!", 200);
+                }, 1500);
+            }
+        }
+
+        // Antivirus Demo Functions
+        function demonstrateAntivirus(feature) {
+            const demo = document.getElementById('antivirusDemo');
+            
+            const features = {
+                scan: {
+                    title: '🔍 Real-Time Scanning in Action',
+                    content: 'Your antivirus is like a security guard that never sleeps! It checks every file you download, every email you open, and every program you run. If it finds something suspicious, it stops it immediately!'
+                },
+                quarantine: {
+                    title: '🏥 Quarantine Protection',
+                    content: 'When antivirus finds a dangerous file, it doesn\'t delete it right away. Instead, it puts it in "quarantine" - a special isolated area where it can\'t harm your computer. It\'s like putting a sick patient in isolation!'
+                },
+                update: {
+                    title: '🔄 Staying Up-to-Date',
+                    content: 'New viruses are created every day! Your antivirus downloads updates regularly to learn about these new threats. It\'s like a detective getting daily briefings about new criminals in town.'
+                },
+                firewall: {
+                    title: '🛡️ Firewall Protection',
+                    content: 'A firewall is like a bouncer at a club - it decides who gets in and who stays out. It monitors all internet connections and blocks suspicious activity from reaching your computer.'
+                }
+            };
+            
+            const feature_info = features[feature];
+            demo.innerHTML = `
+                <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50;">
+                    <h5 style="color: #4CAF50; margin-bottom: 15px;">${feature_info.title}</h5>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">${feature_info.content}</p>
+                </div>
+            `;
+        }
+
+        // Download Rules Functions
+        let downloadScore = 0;
+        function checkDownloadRule(ruleNum, isGood) {
+            const correctAnswers = {1: true, 2: false, 3: true, 4: false};
+            const resultDiv = document.getElementById(`downloadResult${ruleNum}`);
+            
+            if (isGood === correctAnswers[ruleNum]) {
+                resultDiv.innerHTML = `<div style="color: #4CAF50; margin-top: 10px;">✅ Correct! Good security practice!</div>`;
+                downloadScore++;
+            } else {
+                resultDiv.innerHTML = `<div style="color: #f44336; margin-top: 10px;">❌ Think about the security risks!</div>`;
+            }
+            
+            if (downloadScore === 4) {
+                document.getElementById('downloadScore').innerHTML = `🏆 Perfect! You're a safe download expert!`;
+                setTimeout(() => {
+                    showSuccess("🎉 Excellent! You know how to download files safely!", 250);
+                }, 1500);
+            }
+        }
+
+        // System Cleanup Functions
+        let systemCleanupCount = 0;
+        function performCleanup(task) {
+            const checkmark = document.getElementById(`cleanup-${task}`);
+            const result = document.getElementById(`cleanupResult-${task}`);
+            
+            if (checkmark.textContent === '❌') {
+                checkmark.textContent = '✅';
+                checkmark.style.color = '#4CAF50';
+                result.style.display = 'block';
+                systemCleanupCount++;
+                
+                document.getElementById('systemCleanupProgress').style.width = `${(systemCleanupCount / 5) * 100}%`;
+                
+                if (systemCleanupCount === 5) {
+                    setTimeout(() => {
+                        showSuccess("🎉 Amazing! Your computer is now clean and optimized!", 300);
+                    }, 1000);
+                }
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'977edfb775669095',t:'MTc1NjY2NzkwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AwarenessHub - Cybersecurity Learning Platform</title>
+<style>
+/* --- Existing styles retained --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: #333;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+.header { text-align: center; margin-bottom: 40px; color: white; }
+.header h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+.header p { font-size: 1.2rem; opacity: 0.9; }
+
+/* Login Section */
+.login-container {
+  background: rgba(255,255,255,0.95);
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 400px;
+  margin: 100px auto;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+.login-container h2 { margin-bottom: 20px; color: #333; }
+.login-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  font-size: 1rem;
+}
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.login-container button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Hide main content until login */
+#mainContent { display: none; }
+
+/* Existing module and stats styles retained */
+.user-stats, .modules-grid, .module-card, .badges-section { /* existing CSS */ }
+.module-card { cursor: pointer; transition: transform 0.3s ease; }
+.module-card:hover { transform: translateY(-5px); }
+.module-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.module-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="login-container">
+  <h2>🔐 Welcome to AwarenessHub</h2>
+  <p>Please log in to start your cybersecurity journey.</p>
+  <input type="text" id="username" placeholder="Enter your username">
+  <input type="password" id="password" placeholder="Enter your password">
+  <button onclick="loginUser()">Login</button>
+  <div id="loginFeedback" style="margin-top:10px; color:#f44336;"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+  <div class="container">
+    <div class="header">
+      <h1>🛡️ AwarenessHub</h1>
+      <p>Learn Cybersecurity Step by Step - Beginner Friendly!</p>
+    </div>
+
+    <div class="user-stats">
+      <div class="stat-item">
+        <div class="stat-value" id="totalPoints">0</div>
+        <div class="stat-label">Total Points</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="completedModules">0</div>
+        <div class="stat-label">Modules Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="currentLevel">Level 1</div>
+        <div class="stat-label">Current Level</div>
+      </div>
+    </div>
+
+    <div class="modules-grid">
+      <div class="module-card" onclick="openModule('cryptography')">
+        <div class="module-header">
+          <div class="module-icon">🔐</div>
+          <div class="module-title">Secret Message Detective</div>
+        </div>
+        <div class="module-description">
+          Help Detective Cipher solve mysterious coded messages!
+        </div>
+        <button class="module-button">🔍 Start Detective Work</button>
+      </div>
+
+      <div class="module-card" onclick="openModule('passwords')">
+        <div class="module-header">
+          <div class="module-icon">🔑</div>
+          <div class="module-title">Password Guardian Academy</div>
+        </div>
+        <div class="module-description">
+          Learn to create super-strong passwords!
+        </div>
+        <button class="module-button">🛡️ Guard Your Passwords</button>
+      </div>
+
+      <div class="module-card" onclick="openModule('phishing')">
+        <div class="module-header">
+          <div class="module-icon">🎣</div>
+          <div class="module-title">Email Detective Game</div>
+        </div>
+        <div class="module-description">
+          Learn to spot fake emails that try to steal your information.
+        </div>
+        <button class="module-button">🕵️ Investigate Emails</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- LOGIN SYSTEM ---
+function loginUser() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const feedback = document.getElementById('loginFeedback');
+
+  if (username === "" || password === "") {
+    feedback.textContent = "Please enter both username and password.";
+    return;
+  }
+
+  // Simple local validation (for demo)
+  if (password === "cyber123") {
+    localStorage.setItem('awarenessUser', username);
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    document.getElementById('totalPoints').textContent = 350;
+    feedback.textContent = "";
+  } else {
+    feedback.textContent = "Incorrect password. Try 'cyber123'.";
+  }
+}
+
+// Auto-login if user already logged in
+window.onload = function() {
+  const user = localStorage.getItem('awarenessUser');
+  if (user) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    document.getElementById('totalPoints').textContent = 350;
+  }
+};
+
+// --- OPEN MODULES IN NEW WINDOW ---
+function openModule(moduleId) {
+  const moduleWindows = {
+    cryptography: "modules/cryptography.html",
+    passwords: "modules/passwords.html",
+    phishing: "modules/phishing.html"
+  };
+
+  const url = moduleWindows[moduleId];
+  if (url) {
+    window.open(url, "_blank");
+  } else {
+    alert("Module not found or under development.");
+  }
+}
+</script>
+
+</body>
+</html>

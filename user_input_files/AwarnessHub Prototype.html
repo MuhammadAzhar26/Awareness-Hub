@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AwarenessHub - Cybersecurity Learning Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .user-stats {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px auto;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .module-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .module-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+        }
+
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .module-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .module-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .difficulty {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .difficulty.beginner {
+            background: #E8F5E8;
+            color: #4CAF50;
+        }
+
+        .difficulty.intermediate {
+            background: #FFF3E0;
+            color: #FF9800;
+        }
+
+        .difficulty.advanced {
+            background: #FFEBEE;
+            color: #F44336;
+        }
+
+        .module-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .module-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .module-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .badges-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .badges-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+        }
+
+        .badge {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+        }
+
+        .badge.earned {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .badge.locked {
+            background: #f5f5f5;
+            color: #999;
+        }
+
+        .badge-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .badge-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .simulation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .simulation-content {
+            margin-top: 20px;
+        }
+
+        .challenge-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .challenge-button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .feedback.success {
+            background: #E8F5E8;
+            color: #4CAF50;
+            border: 2px solid #4CAF50;
+        }
+
+        .feedback.error {
+            background: #FFEBEE;
+            color: #F44336;
+            border: 2px solid #F44336;
+        }
+
+        .scenario-text {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .bit {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #3498db;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .bit:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
+        .result-bit {
+            background: #27ae60;
+            cursor: default;
+        }
+
+        .letter-slot {
+            width: 40px;
+            height: 40px;
+            border: 2px dashed #8B4513;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: white;
+            border-radius: 5px;
+        }
+        .draggable-letter {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: move;
+            font-weight: bold;
+            margin: 2px;
+        }
+        .draggable-letter:hover {
+            background: #45a049;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .user-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛡️ AwarenessHub</h1>
+            <p>Master Cybersecurity Through Gamified Learning</p>
+        </div>
+
+        <div class="user-stats">
+            <div class="stat-item">
+                <div class="stat-value" id="totalPoints">1,250</div>
+                <div class="stat-label">Total Points</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="completedModules">3</div>
+                <div class="stat-label">Modules Completed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="currentLevel">Level 4</div>
+                <div class="stat-label">Current Level</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="badgesEarned">5</div>
+                <div class="stat-label">Badges Earned</div>
+            </div>
+        </div>
+
+        <div class="modules-grid">
+            <div class="module-card" onclick="openModule('cryptography')">
+                <div class="module-header">
+                    <div class="module-icon">🔐</div>
+                    <div class="module-title">Operation Cipher Storm</div>
+                </div>
+                <div class="module-description">
+                    CLASSIFIED MISSION: Infiltrate Shadow Syndicate's encrypted network. Decode intercepted messages to prevent Project Blackout - a coordinated cyber attack on global infrastructure.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty advanced">Expert</span>
+                    <span>5 Stages • 15 min • 2,500 pts</span>
+                </div>
+                <button class="module-button">🚀 Begin Mission</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('xor')">
+                <div class="module-header">
+                    <div class="module-icon">⚡</div>
+                    <div class="module-title">Quantum Encryption Warfare</div>
+                </div>
+                <div class="module-description">
+                    EMERGENCY: Rogue AI controls quantum encryption grid. Navigate 7 layers of XOR quantum states. AI adapts to your moves - wrong calculations trigger cascade failures.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty advanced">Master</span>
+                    <span>7 Stages • 20 min • 3,500 pts</span>
+                </div>
+                <button class="module-button">⚡ Enter Quantum Grid</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('phishing')">
+                <div class="module-header">
+                    <div class="module-icon">🎣</div>
+                    <div class="module-title">Social Engineering Mastermind</div>
+                </div>
+                <div class="module-description">
+                    DEEP COVER: Infiltrate 'Digital Phantom' cybercrime organization. Navigate spear phishing, whaling attacks, and deepfake calls. Your decisions affect cover and victim safety.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty advanced">Expert</span>
+                    <span>6 Stages • 30 min • 4,000 pts</span>
+                </div>
+                <button class="module-button">🕵️ Go Undercover</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('substitution')">
+                <div class="module-header">
+                    <div class="module-icon">🗺️</div>
+                    <div class="module-title">The Enigma Conspiracy</div>
+                </div>
+                <div class="module-description">
+                    HISTORICAL THRILLER: Hidden Enigma machines coordinate global financial manipulation. Solve multi-layered ciphers across 12 locations. From Caesar to custom rotor configurations.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty advanced">Legendary</span>
+                    <span>8 Stages • 35 min • 5,000 pts</span>
+                </div>
+                <button class="module-button">🔍 Hunt Enigma</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('hash')">
+                <div class="module-header">
+                    <div class="module-icon">🔍</div>
+                    <div class="module-title">The Password Apocalypse</div>
+                </div>
+                <div class="module-description">
+                    GLOBAL CRISIS: 10 billion accounts breached. Quantum computers crack hashes at light speed. Lead emergency response through rainbow tables and quantum-resistant algorithms.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty advanced">Master</span>
+                    <span>9 Stages • 25 min • 3,800 pts</span>
+                </div>
+                <button class="module-button">🛡️ Defend Passwords</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('ransomware')">
+                <div class="module-header">
+                    <div class="module-icon">🚨</div>
+                    <div class="module-title">Cyber Pandemic Response</div>
+                </div>
+                <div class="module-description">
+                    GLOBAL EMERGENCY: AI-powered 'Hydra' ransomware infects 47 countries. Command International Crisis Team. Handle hospitals, power grids, and government systems.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty advanced">Legendary</span>
+                    <span>10 Stages • 40 min • 6,000 pts</span>
+                </div>
+                <button class="module-button">🌍 Command Response</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('network')">
+                <div class="module-header">
+                    <div class="module-icon">🌐</div>
+                    <div class="module-title">The Zero-Day Hunt</div>
+                </div>
+                <div class="module-description">
+                    BLACK OPS: 'Ghost Protocol' APT uses zero-day exploits on government networks. Elite cyber warfare unit. Reverse-engineer attacks, deploy honeypots, counter-intelligence.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty advanced">Expert</span>
+                    <span>8 Stages • 30 min • 4,500 pts</span>
+                </div>
+                <button class="module-button">🎯 Hunt Zero-Days</button>
+            </div>
+
+            <div class="module-card" onclick="openModule('cloud')">
+                <div class="module-header">
+                    <div class="module-icon">☁️</div>
+                    <div class="module-title">The Cloud Conspiracy</div>
+                </div>
+                <div class="module-description">
+                    CORPORATE ESPIONAGE: Fortune 10 insider threat with foreign intelligence. Analyze steganography, DNS tunneling, blockchain C&C. Prevent national security catastrophe.
+                </div>
+                <div class="module-progress">
+                    <span class="difficulty advanced">Legendary</span>
+                    <span>12 Stages • 45 min • 7,500 pts</span>
+                </div>
+                <button class="module-button">🔬 Investigate Conspiracy</button>
+            </div>
+        </div>
+
+        <div class="badges-section">
+            <div class="badges-title">🏆 Achievement Badges</div>
+            <div class="badges-grid">
+                <div class="badge earned">
+                    <div class="badge-icon">🔓</div>
+                    <div class="badge-name">Cipher Master</div>
+                </div>
+                <div class="badge earned">
+                    <div class="badge-icon">⚡</div>
+                    <div class="badge-name">XOR Expert</div>
+                </div>
+                <div class="badge earned">
+                    <div class="badge-icon">🗺️</div>
+                    <div class="badge-name">Treasure Hunter</div>
+                </div>
+                <div class="badge earned">
+                    <div class="badge-icon">🛡️</div>
+                    <div class="badge-name">Security Rookie</div>
+                </div>
+                <div class="badge earned">
+                    <div class="badge-icon">📚</div>
+                    <div class="badge-name">Quick Learner</div>
+                </div>
+                <div class="badge locked">
+                    <div class="badge-icon">🔍</div>
+                    <div class="badge-name">Hash Detective</div>
+                </div>
+                <div class="badge locked">
+                    <div class="badge-icon">🎣</div>
+                    <div class="badge-name">Phish Spotter</div>
+                </div>
+                <div class="badge locked">
+                    <div class="badge-icon">🚨</div>
+                    <div class="badge-name">Crisis Manager</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulation Modal -->
+    <div class="simulation-modal" id="simulationModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Module Challenge</h2>
+            <div class="simulation-content" id="simulationContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userStats = {
+            points: 1250,
+            completedModules: 3,
+            level: 4,
+            badges: 5
+        };
+
+        let gameState = {
+            phishingFound: 0,
+            passwordElements: [],
+            actionSequence: [],
+            networkVulns: 0,
+            cloudSuspicious: 0,
+            treasureLetters: [],
+            currentModule: null,
+            currentStage: 1,
+            maxStages: 1,
+            timeRemaining: 0,
+            agentHealth: 100,
+            hintsUsed: 0,
+            stagesSkipped: 0,
+            score: 0,
+            multiplier: 1,
+            achievements: [],
+            stageProgress: {}
+        };
+
+        const modules = {
+            cryptography: {
+                title: "🔐 Operation Cipher Storm",
+                type: "advanced_crypto",
+                scenario: "CLASSIFIED MISSION: You're Agent Cipher, infiltrating the Shadow Syndicate's encrypted communications network. Intelligence suggests they're planning 'Project Blackout' - a coordinated cyber attack on global infrastructure. You've intercepted multiple encrypted messages using different cipher techniques. Each decoded message reveals coordinates, timestamps, and attack vectors. Failure means millions of lives at risk.",
+                stages: 5,
+                timeLimit: 900,
+                difficulty: "Expert",
+                points: 2500,
+                interactive: true
+            },
+            xor: {
+                title: "⚡ Quantum Encryption Warfare",
+                type: "advanced_xor",
+                scenario: "EMERGENCY PROTOCOL ACTIVATED: A rogue AI has taken control of the quantum encryption grid protecting the Global Defense Network. The AI is using advanced XOR-based quantum entanglement to lock down all systems. You must navigate through 7 layers of increasingly complex XOR operations, each representing a different quantum state. The AI adapts to your moves - one wrong calculation triggers a cascade failure across all connected systems.",
+                stages: 7,
+                timeLimit: 1200,
+                difficulty: "Master",
+                points: 3500,
+                interactive: true
+            },
+            phishing: {
+                title: "🎣 Social Engineering Mastermind",
+                type: "advanced_phishing",
+                scenario: "DEEP COVER OPERATION: You're undercover in the notorious 'Digital Phantom' cybercrime organization. Your mission: identify and neutralize their sophisticated social engineering campaigns targeting Fortune 500 companies. Navigate through 6 realistic scenarios including spear phishing, whaling attacks, business email compromise, and deepfake voice calls. Each decision affects your cover story and the safety of potential victims.",
+                stages: 6,
+                timeLimit: 1800,
+                difficulty: "Expert",
+                points: 4000,
+                interactive: true
+            },
+            substitution: {
+                title: "🗺️ The Enigma Conspiracy",
+                type: "advanced_treasure",
+                scenario: "HISTORICAL THRILLER: You've discovered that the legendary Enigma machine wasn't destroyed after WWII - it was hidden by a secret society that's been using it to coordinate global financial manipulation for 80 years. Ancient treasure maps contain multi-layered substitution ciphers leading to 12 hidden Enigma machines worldwide. Each location requires solving progressively complex historical ciphers, from Caesar to Vigenère to custom rotor configurations.",
+                stages: 8,
+                timeLimit: 2100,
+                difficulty: "Legendary",
+                points: 5000,
+                interactive: true
+            },
+            hash: {
+                title: "🔍 The Password Apocalypse",
+                type: "advanced_password",
+                scenario: "GLOBAL CRISIS: The world's largest password database containing 10 billion accounts has been breached. Hackers are using quantum computers to crack hashes at unprecedented speed. You're leading the emergency response team to analyze compromised hashes, implement quantum-resistant algorithms, and rebuild security for affected organizations. Race against time through 9 escalating scenarios involving rainbow tables, salt analysis, and next-gen hashing algorithms.",
+                stages: 9,
+                timeLimit: 1500,
+                difficulty: "Master",
+                points: 3800,
+                interactive: true
+            },
+            ransomware: {
+                title: "🚨 Cyber Pandemic Response",
+                type: "advanced_ransomware",
+                scenario: "GLOBAL EMERGENCY: A new strain of AI-powered ransomware called 'Hydra' has infected critical infrastructure across 47 countries. It adapts its encryption methods in real-time and spreads through previously unknown zero-day exploits. You're commanding the International Cyber Crisis Response Team. Navigate through 10 high-pressure scenarios including hospital systems, power grids, financial networks, and government databases. Every decision has global consequences.",
+                stages: 10,
+                timeLimit: 2400,
+                difficulty: "Legendary",
+                points: 6000,
+                interactive: true
+            },
+            network: {
+                title: "🌐 The Zero-Day Hunt",
+                type: "advanced_network",
+                scenario: "BLACK OPS MISSION: Intelligence agencies have detected an advanced persistent threat (APT) group called 'Ghost Protocol' using a chain of zero-day exploits to infiltrate government networks worldwide. You're part of an elite cyber warfare unit tasked with reverse-engineering their attack vectors. Navigate through 8 complex network scenarios involving packet analysis, exploit development, honeypot deployment, and counter-intelligence operations.",
+                stages: 8,
+                timeLimit: 1800,
+                difficulty: "Expert",
+                points: 4500,
+                interactive: true
+            },
+            cloud: {
+                title: "☁️ The Cloud Conspiracy",
+                type: "advanced_cloud",
+                scenario: "CORPORATE ESPIONAGE THRILLER: A Fortune 10 company's entire cloud infrastructure has been compromised by an insider threat working with foreign intelligence. Terabytes of sensitive data are being exfiltrated through sophisticated techniques including steganography, DNS tunneling, and blockchain-based command & control. Analyze 12 months of cloud logs across multiple providers, identify the insider, trace the data flow, and prevent a national security catastrophe.",
+                stages: 12,
+                timeLimit: 2700,
+                difficulty: "Legendary",
+                points: 7500,
+                interactive: true
+            }
+        };
+
+        function openModule(moduleId) {
+            const module = modules[moduleId];
+            if (!module) return;
+
+            gameState.currentModule = moduleId;
+            gameState.currentStage = 1;
+            gameState.maxStages = module.stages;
+            gameState.timeRemaining = module.timeLimit;
+            gameState.agentHealth = 100;
+            gameState.hintsUsed = 0;
+            gameState.stagesSkipped = 0;
+            gameState.score = 0;
+            gameState.multiplier = 1;
+
+            document.getElementById('modalTitle').textContent = module.title;
+            
+            let interactiveContent = '';
+            
+            switch(module.type) {
+                case 'advanced_crypto':
+                    interactiveContent = createCryptographySimulation();
+                    break;
+                case 'advanced_xor':
+                    interactiveContent = createXORSimulation();
+                    break;
+                case 'advanced_phishing':
+                    interactiveContent = createPhishingSimulation();
+                    break;
+                case 'advanced_treasure':
+                    interactiveContent = createTreasureSimulation();
+                    break;
+                case 'advanced_password':
+                    interactiveContent = createPasswordSimulation();
+                    break;
+                case 'advanced_ransomware':
+                    interactiveContent = createRansomwareSimulation();
+                    break;
+                case 'advanced_network':
+                    interactiveContent = createNetworkSimulation();
+                    break;
+                case 'advanced_cloud':
+                    interactiveContent = createCloudSimulation();
+                    break;
+                default:
+                    interactiveContent = createDefaultSimulation(module);
+            }
+
+            document.getElementById('simulationContent').innerHTML = `
+                <div class="scenario-text" style="background: linear-gradient(135deg, #2c3e50, #34495e); color: white; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                    <h3 style="color: #f39c12; margin-bottom: 15px;">📖 Mission Briefing</h3>
+                    <p style="line-height: 1.6; font-size: 1.1rem;">${module.scenario}</p>
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <div><strong>Difficulty:</strong> <span style="color: #e74c3c;">${module.difficulty}</span></div>
+                        <div><strong>Stage:</strong> <span style="color: #3498db;" id="stageCounter">${gameState.currentStage}/${gameState.maxStages}</span></div>
+                        <div><strong>Max Points:</strong> <span style="color: #2ecc71;">${module.points.toLocaleString()}</span></div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 3px;">
+                            <div id="stageProgressBar" style="width: ${(gameState.currentStage / gameState.maxStages) * 100}%; height: 8px; background: linear-gradient(90deg, #f39c12, #e67e22); border-radius: 8px; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="challenge-section">
+                    ${interactiveContent}
+                    <div id="feedback"></div>
+                </div>
+            `;
+            
+            document.getElementById('simulationModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('simulationModal').style.display = 'none';
+        }
+
+        function createCryptographySimulation() {
+            return `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <h4>🔐 Caesar Cipher Challenge</h4>
+                    <div style="background: #000; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; margin: 15px 0;">
+                        <div>INTERCEPTED MESSAGE:</div>
+                        <div style="margin: 10px 0; font-size: 1.2rem; color: #ff6b6b;">KHOOR ZRUOG</div>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <div>Shift Amount: <span id="shiftValue">3</span></div>
+                        <input type="range" id="shiftSlider" min="1" max="25" value="3" oninput="updateCipherText()" style="width: 100%; margin: 10px 0;">
+                        <div>Decrypted: <span id="decryptedText" style="font-weight: bold; color: #27ae60;">HELLO WORLD</span></div>
+                    </div>
+                    <button class="challenge-button" onclick="checkCryptoAnswer()">Decrypt Message</button>
+                </div>
+            `;
+        }
+
+        function createXORSimulation() {
+            return `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <h4>⚡ XOR Operation Challenge</h4>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0;">
+                        <div style="text-align: center;">
+                            <div>Input A</div>
+                            <div class="bit-display" style="display: flex; gap: 5px; justify-content: center; margin: 10px 0;">
+                                <span class="bit" onclick="toggleBit(this, 'a', 0)">1</span>
+                                <span class="bit" onclick="toggleBit(this, 'a', 1)">0</span>
+                                <span class="bit" onclick="toggleBit(this, 'a', 2)">1</span>
+                                <span class="bit" onclick="toggleBit(this, 'a', 3)">0</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div>XOR</div>
+                            <div style="font-size: 2rem; margin: 10px 0;">⊕</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div>Key B</div>
+                            <div class="bit-display" style="display: flex; gap: 5px; justify-content: center; margin: 10px 0;">
+                                <span class="bit">1</span>
+                                <span class="bit">1</span>
+                                <span class="bit">0</span>
+                                <span class="bit">0</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div>Result</div>
+                            <div class="bit-display" style="display: flex; gap: 5px; justify-content: center; margin: 10px 0;">
+                                <span class="bit result-bit" id="result0">0</span>
+                                <span class="bit result-bit" id="result1">1</span>
+                                <span class="bit result-bit" id="result2">1</span>
+                                <span class="bit result-bit" id="result3">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="challenge-button" onclick="checkXORAnswer()">Submit XOR Result</button>
+                </div>
+            `;
+        }
+
+        function createPhishingSimulation() {
+            return `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0; border: 2px solid #ddd;">
+                    <div style="background: #fff; border-radius: 8px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <div style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+                            <div style="font-weight: bold;">📧 Email Inbox</div>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>From:</strong> <span class="suspicious-element" onclick="markSuspicious(this)" style="cursor: pointer;">security@amaz0n-verify.com</span>
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <strong>Subject:</strong> <span class="suspicious-element" onclick="markSuspicious(this)" style="cursor: pointer;">URGENT: Account Suspended - Verify Now!</span>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <strong>Message:</strong>
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 10px;">
+                                Dear Customer,<br><br>
+                                Your account has been <span class="suspicious-element" onclick="markSuspicious(this)" style="cursor: pointer; color: red; font-weight: bold;">suspended due to suspicious activity</span>. 
+                                You must verify your account within 24 hours or it will be permanently deleted.<br><br>
+                                <a href="#" class="suspicious-element" onclick="markSuspicious(this)" style="cursor: pointer; color: blue; text-decoration: underline;">Click here to verify: bit.ly/verify-account-now</a><br><br>
+                                Thank you,<br>
+                                Amazon Security Team
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <div>🎯 Click on suspicious elements in the email above</div>
+                            <div id="phishingScore" style="margin: 10px 0; font-weight: bold;">Suspicious elements found: 0/4</div>
+                            <button class="challenge-button" onclick="checkPhishingAnswer()">Submit Analysis</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createTreasureSimulation() {
+            return `
+                <div style="background: #8B4513; padding: 20px; border-radius: 10px; margin: 15px 0; color: white;">
+                    <h4>🗺️ Ancient Treasure Map Decoder</h4>
+                    <div style="background: #D2B48C; color: #8B4513; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <div style="text-align: center; margin-bottom: 15px;">
+                            <div style="font-family: serif; font-size: 1.2rem; font-weight: bold;">Coded Message:</div>
+                            <div style="font-family: monospace; font-size: 1.5rem; letter-spacing: 3px; margin: 10px 0;">
+                                W U H D V X U H
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div>Cipher Key: A→D, B→E, C→F (shift +3)</div>
+                            <div style="margin: 15px 0;">
+                                <div>Drag the correct letters to decode:</div>
+                                <div id="decodeArea" style="display: flex; gap: 10px; justify-content: center; margin: 15px 0; min-height: 50px; align-items: center;">
+                                    <div class="letter-slot" ondrop="drop(event)" ondragover="allowDrop(event)">_</div>
+                                    <div class="letter-slot" ondrop="drop(event)" ondragover="allowDrop(event)">_</div>
+                                    <div class="letter-slot" ondrop="drop(event)" ondragover="allowDrop(event)">_</div>
+                                    <div class="letter-slot" ondrop="drop(event)" ondragover="allowDrop(event)">_</div>
+                                    <div class="letter-slot" ondrop="drop(event)" ondragover="allowDrop(event)">_</div>
+                                    <div class="letter-slot" ondrop="drop(event)" ondragover="allowDrop(event)">_</div>
+                                    <div class="letter-slot" ondrop="drop(event)" ondragover="allowDrop(event)">_</div>
+                                    <div class="letter-slot" ondrop="drop(event)" ondragover="allowDrop(event)">_</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                                <span class="draggable-letter" draggable="true" ondragstart="drag(event)">T</span>
+                                <span class="draggable-letter" draggable="true" ondragstart="drag(event)">R</span>
+                                <span class="draggable-letter" draggable="true" ondragstart="drag(event)">E</span>
+                                <span class="draggable-letter" draggable="true" ondragstart="drag(event)">A</span>
+                                <span class="draggable-letter" draggable="true" ondragstart="drag(event)">S</span>
+                                <span class="draggable-letter" draggable="true" ondragstart="drag(event)">U</span>
+                                <span class="draggable-letter" draggable="true" ondragstart="drag(event)">R</span>
+                                <span class="draggable-letter" draggable="true" ondragstart="drag(event)">E</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="challenge-button" onclick="checkTreasureAnswer()">Decode Message</button>
+                </div>
+            `;
+        }
+
+        function createPasswordSimulation() {
+            return `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <h4>🔐 Password Strength Builder</h4>
+                    <div style="margin: 20px 0;">
+                        <div>Build a strong password by selecting elements:</div>
+                        <div id="passwordBuilder" style="background: white; border: 2px solid #ddd; padding: 15px; border-radius: 8px; margin: 15px 0; min-height: 50px; font-family: monospace; font-size: 1.2rem;"></div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                            <div class="password-element" onclick="addPasswordElement('lowercase')" style="cursor: pointer; padding: 10px; background: #e3f2fd; border-radius: 8px; text-align: center;">
+                                📝 Lowercase Letters (a-z)
+                            </div>
+                            <div class="password-element" onclick="addPasswordElement('uppercase')" style="cursor: pointer; padding: 10px; background: #f3e5f5; border-radius: 8px; text-align: center;">
+                                🔤 Uppercase Letters (A-Z)
+                            </div>
+                            <div class="password-element" onclick="addPasswordElement('numbers')" style="cursor: pointer; padding: 10px; background: #e8f5e8; border-radius: 8px; text-align: center;">
+                                🔢 Numbers (0-9)
+                            </div>
+                            <div class="password-element" onclick="addPasswordElement('symbols')" style="cursor: pointer; padding: 10px; background: #fff3e0; border-radius: 8px; text-align: center;">
+                                🔣 Special Characters (!@#$)
+                            </div>
+                        </div>
+                        <div id="strengthMeter" style="margin: 15px 0;">
+                            <div>Password Strength:</div>
+                            <div style="width: 100%; height: 20px; background: #e0e0e0; border-radius: 10px; overflow: hidden; margin: 5px 0;">
+                                <div id="strengthBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #f44336, #ff9800, #4caf50); transition: width 0.3s ease;"></div>
+                            </div>
+                            <div id="strengthText">Weak</div>
+                        </div>
+                    </div>
+                    <button class="challenge-button" onclick="checkPasswordAnswer()">Test Password Strength</button>
+                </div>
+            `;
+        }
+
+        function createRansomwareSimulation() {
+            return `
+                <div style="background: linear-gradient(135deg, #ff4757, #ff3742); color: white; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <h4>🚨 RANSOMWARE DETECTED!</h4>
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <div style="font-family: monospace; color: #ffff00;">
+                            ⚠️ CRITICAL ALERT ⚠️<br>
+                            Files encrypted: 1,247 files<br>
+                            Affected systems: 12 computers<br>
+                            Time remaining: 72:00:00
+                        </div>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <div style="margin-bottom: 15px;">Choose your response actions in the correct order:</div>
+                        <div id="actionSequence" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; min-height: 60px; margin: 15px 0;">
+                            <div style="color: #ddd;">Click actions below to add them to your response sequence...</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                            <div class="action-button" onclick="addAction('disconnect')" style="cursor: pointer; padding: 12px; background: #27ae60; border-radius: 8px; text-align: center; font-weight: bold;">
+                                🔌 Disconnect Network
+                            </div>
+                            <div class="action-button" onclick="addAction('isolate')" style="cursor: pointer; padding: 12px; background: #f39c12; border-radius: 8px; text-align: center; font-weight: bold;">
+                                🏥 Isolate Infected Systems
+                            </div>
+                            <div class="action-button" onclick="addAction('backup')" style="cursor: pointer; padding: 12px; background: #3498db; border-radius: 8px; text-align: center; font-weight: bold;">
+                                💾 Check Backup Systems
+                            </div>
+                            <div class="action-button" onclick="addAction('authorities')" style="cursor: pointer; padding: 12px; background: #9b59b6; border-radius: 8px; text-align: center; font-weight: bold;">
+                                📞 Contact Authorities
+                            </div>
+                            <div class="action-button" onclick="addAction('pay')" style="cursor: pointer; padding: 12px; background: #e74c3c; border-radius: 8px; text-align: center; font-weight: bold;">
+                                💰 Pay Ransom
+                            </div>
+                            <div class="action-button" onclick="addAction('restart')" style="cursor: pointer; padding: 12px; background: #95a5a6; border-radius: 8px; text-align: center; font-weight: bold;">
+                                🔄 Restart Systems
+                            </div>
+                        </div>
+                    </div>
+                    <button class="challenge-button" onclick="checkRansomwareAnswer()" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">Submit Response Plan</button>
+                </div>
+            `;
+        }
+
+        function createNetworkSimulation() {
+            return `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <h4>🌐 Network Vulnerability Scanner</h4>
+                    <div style="background: #000; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; margin: 15px 0;">
+                        <div>Scanning network 192.168.1.0/24...</div>
+                        <div style="margin: 10px 0;">
+                            Host: 192.168.1.100<br>
+                            <span class="port-scan" onclick="scanPort(this, 22)" style="cursor: pointer;">Port 22/tcp   OPEN    ssh</span><br>
+                            <span class="port-scan" onclick="scanPort(this, 80)" style="cursor: pointer;">Port 80/tcp   OPEN    http</span><br>
+                            <span class="port-scan" onclick="scanPort(this, 443)" style="cursor: pointer;">Port 443/tcp  OPEN    https</span><br>
+                            <span class="port-scan" onclick="scanPort(this, 3389)" style="cursor: pointer;">Port 3389/tcp OPEN    rdp</span><br>
+                            <span class="port-scan" onclick="scanPort(this, 21)" style="cursor: pointer;">Port 21/tcp   OPEN    ftp</span>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            Click on potentially vulnerable ports above
+                        </div>
+                    </div>
+                    <div id="vulnerabilityReport" style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0; min-height: 50px;">
+                        <strong>Vulnerability Report:</strong><br>
+                        <div id="reportContent">Click on suspicious ports to analyze...</div>
+                    </div>
+                    <button class="challenge-button" onclick="checkNetworkAnswer()">Submit Security Assessment</button>
+                </div>
+            `;
+        }
+
+        function createCloudSimulation() {
+            return `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <h4>☁️ Cloud Access Log Analyzer</h4>
+                    <div style="background: #000; color: #fff; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 0.9rem; margin: 15px 0; max-height: 300px; overflow-y: auto;">
+                        <div>Cloud Access Logs - Last 24 Hours</div>
+                        <div style="margin: 10px 0;">
+                            <div class="log-entry" onclick="markLogEntry(this)" style="cursor: pointer; padding: 2px 0;">2024-01-15 09:15:23 | user@company.com | Login SUCCESS | IP: 203.0.113.45 | Location: New York, US</div>
+                            <div class="log-entry" onclick="markLogEntry(this)" style="cursor: pointer; padding: 2px 0;">2024-01-15 09:47:12 | user@company.com | File Access | IP: 203.0.113.45 | Location: New York, US</div>
+                            <div class="log-entry suspicious" onclick="markLogEntry(this)" style="cursor: pointer; padding: 2px 0; color: #ff6b6b;">2024-01-15 10:23:45 | user@company.com | Login SUCCESS | IP: 185.220.101.42 | Location: Moscow, RU</div>
+                            <div class="log-entry" onclick="markLogEntry(this)" style="cursor: pointer; padding: 2px 0;">2024-01-15 11:05:33 | admin@company.com | Login SUCCESS | IP: 198.51.100.23 | Location: California, US</div>
+                            <div class="log-entry suspicious" onclick="markLogEntry(this)" style="cursor: pointer; padding: 2px 0; color: #ff6b6b;">2024-01-15 11:15:67 | user@company.com | Multiple Failed Logins | IP: 185.220.101.42 | Location: Moscow, RU</div>
+                            <div class="log-entry" onclick="markLogEntry(this)" style="cursor: pointer; padding: 2px 0;">2024-01-15 12:30:15 | user@company.com | Logout | IP: 203.0.113.45 | Location: New York, US</div>
+                            <div class="log-entry suspicious" onclick="markLogEntry(this)" style="cursor: pointer; padding: 2px 0; color: #ff6b6b;">2024-01-15 13:45:22 | user@company.com | Data Download (500MB) | IP: 45.77.39.108 | Location: Beijing, CN</div>
+                            <div class="log-entry" onclick="markLogEntry(this)" style="cursor: pointer; padding: 2px 0;">2024-01-15 14:20:11 | manager@company.com | Login SUCCESS | IP: 192.0.2.146 | Location: London, UK</div>
+                        </div>
+                    </div>
+                    <div id="suspiciousCount" style="margin: 15px 0; font-weight: bold;">Suspicious activities identified: 0/3</div>
+                    <button class="challenge-button" onclick="checkCloudAnswer()">Submit Log Analysis</button>
+                </div>
+            `;
+        }
+
+        function createDefaultSimulation(module) {
+            return `
+                <input type="text" class="challenge-input" id="challengeAnswer" placeholder="Enter your answer here...">
+                <div>
+                    <button class="challenge-button" onclick="checkDefaultAnswer('test', 100)">Submit Answer</button>
+                </div>
+            `;
+        }
+
+        // Cipher functions
+        function updateCipherText() {
+            const shift = parseInt(document.getElementById('shiftSlider').value);
+            document.getElementById('shiftValue').textContent = shift;
+            
+            const encrypted = "KHOOR ZRUOG";
+            let decrypted = "";
+            
+            for (let char of encrypted) {
+                if (char === ' ') {
+                    decrypted += ' ';
+                } else {
+                    let code = char.charCodeAt(0) - shift;
+                    if (code < 65) code += 26;
+                    decrypted += String.fromCharCode(code);
+                }
+            }
+            
+            document.getElementById('decryptedText').textContent = decrypted;
+        }
+
+        function checkCryptoAnswer() {
+            const decrypted = document.getElementById('decryptedText').textContent;
+            if (decrypted === "HELLO WORLD") {
+                showSuccess("🎉 Perfect! You've decoded the Caesar cipher!", 100);
+            } else {
+                showError("Try adjusting the shift amount to decode the message correctly.");
+            }
+        }
+
+        // XOR functions
+        function toggleBit(element, input, position) {
+            const currentValue = element.textContent;
+            const newValue = currentValue === '1' ? '0' : '1';
+            element.textContent = newValue;
+            updateXORResult();
+        }
+
+        function updateXORResult() {
+            const inputA = Array.from(document.querySelectorAll('.bit-display')[0].children).map(el => el.textContent);
+            const inputB = ['1', '1', '0', '0'];
+            
+            for (let i = 0; i < 4; i++) {
+                const result = (inputA[i] === inputB[i]) ? '0' : '1';
+                document.getElementById(`result${i}`).textContent = result;
+            }
+        }
+
+        function checkXORAnswer() {
+            const results = [];
+            for (let i = 0; i < 4; i++) {
+                results.push(document.getElementById(`result${i}`).textContent);
+            }
+            const resultString = results.join('');
+            
+            if (resultString === '0110') {
+                showSuccess("🎉 Excellent! You understand XOR operations!", 150);
+            } else {
+                showError("Check your XOR logic. Remember: XOR returns 1 when bits are different.");
+            }
+        }
+
+        // Phishing functions
+        function markSuspicious(element) {
+            if (!element.classList.contains('marked')) {
+                element.classList.add('marked');
+                element.style.background = '#ffeb3b';
+                element.style.padding = '2px 5px';
+                element.style.borderRadius = '3px';
+                gameState.phishingFound++;
+                document.getElementById('phishingScore').textContent = `Suspicious elements found: ${gameState.phishingFound}/4`;
+            }
+        }
+
+        function checkPhishingAnswer() {
+            if (gameState.phishingFound >= 3) {
+                showSuccess("🎉 Great job! You identified the phishing attempt!", 200);
+            } else {
+                showError("Look more carefully for suspicious elements in the email.");
+            }
+        }
+
+        // Treasure functions
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.textContent);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const data = ev.dataTransfer.getData("text");
+            if (ev.target.classList.contains('letter-slot')) {
+                ev.target.textContent = data;
+                ev.target.style.color = '#333';
+            }
+        }
+
+        function checkTreasureAnswer() {
+            const slots = document.querySelectorAll('.letter-slot');
+            const decoded = Array.from(slots).map(slot => slot.textContent).join('');
+            
+            if (decoded === 'TREASURE') {
+                showSuccess("🎉 Amazing! You've found the treasure location!", 175);
+            } else {
+                showError("Check your decoding. Remember: W→T, U→R, H→E, etc.");
+            }
+        }
+
+        // Password functions
+        function addPasswordElement(type) {
+            const builder = document.getElementById('passwordBuilder');
+            const elements = {
+                lowercase: 'abc',
+                uppercase: 'XYZ',
+                numbers: '123',
+                symbols: '!@#'
+            };
+            
+            if (!gameState.passwordElements.includes(type)) {
+                gameState.passwordElements.push(type);
+                builder.textContent += elements[type];
+                updatePasswordStrength();
+            }
+        }
+
+        function updatePasswordStrength() {
+            const strength = gameState.passwordElements.length * 25;
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            
+            strengthBar.style.width = strength + '%';
+            
+            if (strength < 50) {
+                strengthText.textContent = 'Weak';
+            } else if (strength < 75) {
+                strengthText.textContent = 'Medium';
+            } else {
+                strengthText.textContent = 'Strong';
+            }
+        }
+
+        function checkPasswordAnswer() {
+            if (gameState.passwordElements.length >= 3) {
+                showSuccess("🎉 Excellent! You've built a strong password!", 125);
+            } else {
+                showError("Add more elements to make your password stronger.");
+            }
+        }
+
+        // Ransomware functions
+        function addAction(action) {
+            const sequence = document.getElementById('actionSequence');
+            gameState.actionSequence.push(action);
+            
+            const actionNames = {
+                disconnect: '🔌 Disconnect Network',
+                isolate: '🏥 Isolate Systems',
+                backup: '💾 Check Backups',
+                authorities: '📞 Contact Authorities',
+                pay: '💰 Pay Ransom',
+                restart: '🔄 Restart Systems'
+            };
+            
+            sequence.innerHTML = gameState.actionSequence.map(a => actionNames[a]).join(' → ');
+        }
+
+        function checkRansomwareAnswer() {
+            const correctSequence = ['disconnect', 'isolate', 'backup', 'authorities'];
+            const userSequence = gameState.actionSequence.slice(0, 4);
+            
+            if (JSON.stringify(userSequence) === JSON.stringify(correctSequence)) {
+                showSuccess("🎉 Perfect incident response! You've contained the threat!", 300);
+            } else {
+                showError("Review your response sequence. Priority is to prevent spread first.");
+            }
+        }
+
+        // Network functions
+        function scanPort(element, port) {
+            const vulnerablePorts = [22, 21, 3389];
+            const reportContent = document.getElementById('reportContent');
+            
+            if (vulnerablePorts.includes(port)) {
+                element.style.background = '#ff6b6b';
+                gameState.networkVulns++;
+                
+                const portInfo = {
+                    22: 'SSH - Potential brute force target',
+                    21: 'FTP - Unencrypted file transfer',
+                    3389: 'RDP - Remote desktop vulnerability'
+                };
+                
+                reportContent.innerHTML += `<div>⚠️ Port ${port}: ${portInfo[port]}</div>`;
+            } else {
+                element.style.background = '#4caf50';
+                reportContent.innerHTML += `<div>✅ Port ${port}: Secure service</div>`;
+            }
+        }
+
+        function checkNetworkAnswer() {
+            if (gameState.networkVulns >= 2) {
+                showSuccess("🎉 Great security assessment! You identified key vulnerabilities!", 150);
+            } else {
+                showError("Look for more potentially vulnerable services.");
+            }
+        }
+
+        // Cloud functions
+        function markLogEntry(element) {
+            if (element.classList.contains('suspicious')) {
+                element.style.background = '#ff6b6b';
+                element.style.color = 'white';
+                gameState.cloudSuspicious++;
+                document.getElementById('suspiciousCount').textContent = `Suspicious activities identified: ${gameState.cloudSuspicious}/3`;
+            } else {
+                element.style.background = '#4caf50';
+                element.style.color = 'white';
+            }
+        }
+
+        function checkCloudAnswer() {
+            if (gameState.cloudSuspicious >= 2) {
+                showSuccess("🎉 Excellent log analysis! You spotted the security threats!", 250);
+            } else {
+                showError("Look for unusual login patterns and locations.");
+            }
+        }
+
+        // Stage progression functions
+        function nextStage() {
+            if (gameState.currentStage < gameState.maxStages) {
+                gameState.currentStage++;
+                updateStageDisplay();
+                loadStageContent();
+            } else {
+                completeModule();
+            }
+        }
+
+        function updateStageDisplay() {
+            document.getElementById('stageCounter').textContent = `${gameState.currentStage}/${gameState.maxStages}`;
+            const progressBar = document.getElementById('stageProgressBar');
+            if (progressBar) {
+                progressBar.style.width = `${(gameState.currentStage / gameState.maxStages) * 100}%`;
+            }
+        }
+
+        function loadStageContent() {
+            const module = modules[gameState.currentModule];
+            let stageContent = '';
+            
+            // Generate different content based on stage number
+            switch(module.type) {
+                case 'advanced_crypto':
+                    stageContent = getCryptoStageContent(gameState.currentStage);
+                    break;
+                case 'advanced_xor':
+                    stageContent = getXORStageContent(gameState.currentStage);
+                    break;
+                case 'advanced_phishing':
+                    stageContent = getPhishingStageContent(gameState.currentStage);
+                    break;
+                case 'advanced_treasure':
+                    stageContent = getTreasureStageContent(gameState.currentStage);
+                    break;
+                case 'advanced_password':
+                    stageContent = getPasswordStageContent(gameState.currentStage);
+                    break;
+                case 'advanced_ransomware':
+                    stageContent = getRansomwareStageContent(gameState.currentStage);
+                    break;
+                case 'advanced_network':
+                    stageContent = getNetworkStageContent(gameState.currentStage);
+                    break;
+                case 'advanced_cloud':
+                    stageContent = getCloudStageContent(gameState.currentStage);
+                    break;
+                default:
+                    stageContent = createDefaultSimulation(module);
+            }
+            
+            document.querySelector('.challenge-section').innerHTML = stageContent + '<div id="feedback"></div>';
+        }
+
+        function completeModule() {
+            gameState.stageProgress[gameState.currentModule] = gameState.maxStages;
+            userStats.completedModules++;
+            document.getElementById('completedModules').textContent = userStats.completedModules;
+            
+            setTimeout(() => {
+                closeModal();
+                showModuleCompletionAnimation();
+            }, 2000);
+        }
+
+        // Feedback functions
+        function showSuccess(message, points) {
+            document.getElementById('feedback').innerHTML = `
+                <div class="feedback success">
+                    ${message}<br>
+                    <strong>+${points} points earned!</strong>
+                </div>
+            `;
+            updateUserStats(points);
+            
+            setTimeout(() => {
+                if (gameState.currentStage < gameState.maxStages) {
+                    document.getElementById('feedback').innerHTML += `
+                        <div style="margin-top: 15px;">
+                            <button class="challenge-button" onclick="nextStage()">Continue to Stage ${gameState.currentStage + 1} →</button>
+                        </div>
+                    `;
+                } else {
+                    setTimeout(() => {
+                        completeModule();
+                    }, 1500);
+                }
+            }, 1000);
+        }
+
+        function showError(message) {
+            document.getElementById('feedback').innerHTML = `
+                <div class="feedback error">
+                    ❌ ${message}
+                </div>
+            `;
+        }
+
+        function checkDefaultAnswer(correctAnswer, points) {
+            const userAnswer = document.getElementById('challengeAnswer').value.toLowerCase().trim();
+            if (userAnswer === correctAnswer.toLowerCase()) {
+                showSuccess("🎉 Excellent! You've successfully completed this challenge!", points);
+            } else {
+                showError("Not quite right. Try again!");
+            }
+        }
+
+        function updateUserStats(pointsEarned) {
+            userStats.points += pointsEarned;
+            document.getElementById('totalPoints').textContent = userStats.points.toLocaleString();
+            
+            const newLevel = Math.floor(userStats.points / 300) + 1;
+            if (newLevel > userStats.level) {
+                userStats.level = newLevel;
+                document.getElementById('currentLevel').textContent = `Level ${userStats.level}`;
+                showLevelUpAnimation();
+            }
+        }
+
+        function showCompletionAnimation() {
+            const celebration = document.createElement('div');
+            celebration.innerHTML = '🎉 Challenge Completed! 🎉';
+            celebration.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #4CAF50, #45a049);
+                color: white;
+                padding: 20px 40px;
+                border-radius: 15px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                z-index: 2000;
+                animation: celebrationPulse 2s ease-in-out;
+            `;
+            
+            document.body.appendChild(celebration);
+            setTimeout(() => celebration.remove(), 2000);
+        }
+
+        function showLevelUpAnimation() {
+            const levelUp = document.createElement('div');
+            levelUp.innerHTML = `🚀 Level Up! You're now Level ${userStats.level}! 🚀`;
+            levelUp.style.cssText = `
+                position: fixed;
+                top: 30%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #FFD700, #FFA500);
+                color: white;
+                padding: 20px 40px;
+                border-radius: 15px;
+                font-size: 1.5rem;
+                font-weight: bold;
+                z-index: 2000;
+                animation: levelUpBounce 3s ease-in-out;
+            `;
+            
+            document.body.appendChild(levelUp);
+            setTimeout(() => levelUp.remove(), 3000);
+        }
+
+        function showModuleCompletionAnimation() {
+            const completion = document.createElement('div');
+            completion.innerHTML = `🏆 Mission Complete! All ${gameState.maxStages} stages cleared! 🏆`;
+            completion.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #9b59b6, #8e44ad);
+                color: white;
+                padding: 25px 50px;
+                border-radius: 15px;
+                font-size: 1.8rem;
+                font-weight: bold;
+                z-index: 2000;
+                animation: celebrationPulse 3s ease-in-out;
+                text-align: center;
+            `;
+            
+            document.body.appendChild(completion);
+            setTimeout(() => completion.remove(), 3000);
+        }
+
+        // Stage content generators
+        function getCryptoStageContent(stage) {
+            const stages = {
+                1: createCryptographySimulation(),
+                2: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🔐 Vigenère Cipher Challenge</h4>
+                    <div style="background: #000; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace;">
+                        <div>INTERCEPTED: LXFOPVEFRNHR</div>
+                        <div>KEY HINT: CRYPTO</div>
+                    </div>
+                    <input type="text" class="challenge-input" placeholder="Enter decoded message..." id="vigenereAnswer">
+                    <button class="challenge-button" onclick="checkAnswer('vigenereAnswer', 'ATTACKATDAWN', 150)">Decrypt</button>
+                </div>`,
+                3: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🔐 RSA Key Exchange</h4>
+                    <div>Select the correct RSA key pair:</div>
+                    <div style="margin: 15px 0;">
+                        <button class="challenge-button" onclick="checkAnswer('rsa', 'correct', 200)" style="margin: 5px;">p=17, q=19, n=323</button>
+                        <button class="challenge-button" onclick="checkAnswer('rsa', 'wrong', 0)" style="margin: 5px;">p=15, q=21, n=315</button>
+                    </div>
+                </div>`,
+                4: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🔐 Digital Signature Verification</h4>
+                    <div>Verify the message integrity:</div>
+                    <div style="background: #000; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace; margin: 15px 0;">
+                        Message: "Transfer $1,000,000"<br>
+                        Hash: SHA256(message) = a1b2c3d4...<br>
+                        Signature: Valid ✓
+                    </div>
+                    <button class="challenge-button" onclick="checkAnswer('signature', 'verified', 250)">Verify Signature</button>
+                </div>`,
+                5: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🔐 Final Decryption - Project Blackout</h4>
+                    <div style="background: #ff4757; color: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <strong>CRITICAL:</strong> Decode the final coordinates to prevent the attack!
+                    </div>
+                    <div style="background: #000; color: #00ff00; padding: 15px; border-radius: 8px; font-family: monospace;">
+                        FINAL MESSAGE: 40.7589° N, 73.9851° W
+                    </div>
+                    <input type="text" class="challenge-input" placeholder="Enter location name..." id="finalLocation">
+                    <button class="challenge-button" onclick="checkAnswer('finalLocation', 'NEW YORK', 500)">Submit Location</button>
+                </div>`
+            };
+            return stages[stage] || stages[1];
+        }
+
+        function getXORStageContent(stage) {
+            const stages = {
+                1: createXORSimulation(),
+                2: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>⚡ Quantum Layer 2: 8-bit XOR</h4>
+                    <div>XOR these 8-bit values: 11010110 ⊕ 10101010</div>
+                    <input type="text" class="challenge-input" placeholder="Enter 8-bit result..." id="xor8bit">
+                    <button class="challenge-button" onclick="checkAnswer('xor8bit', '01111100', 200)">Submit</button>
+                </div>`,
+                3: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>⚡ Quantum Layer 3: Stream Cipher</h4>
+                    <div>Decrypt: HELLO ⊕ KEY = 01001000 01000101 01001100 01001100 01001111</div>
+                    <button class="challenge-button" onclick="checkAnswer('stream', 'decrypted', 250)">Decrypt Stream</button>
+                </div>`
+            };
+            return stages[stage] || stages[1];
+        }
+
+        function getPhishingStageContent(stage) {
+            const stages = {
+                1: createPhishingSimulation(),
+                2: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🎣 Spear Phishing Analysis</h4>
+                    <div>Analyze this targeted attack on a CEO:</div>
+                    <div style="background: white; padding: 15px; border: 1px solid #ddd; margin: 15px 0;">
+                        From: board@company-board.net<br>
+                        Subject: Urgent: Board Meeting Minutes<br>
+                        "Please review attached confidential minutes..."
+                    </div>
+                    <button class="challenge-button" onclick="checkAnswer('spear', 'suspicious', 200)">Mark as Suspicious</button>
+                </div>`,
+                3: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🎣 Business Email Compromise</h4>
+                    <div>Detect the BEC attempt:</div>
+                    <div style="background: white; padding: 15px; border: 1px solid #ddd; margin: 15px 0;">
+                        From: ceo@company.com (spoofed)<br>
+                        "Wire $50,000 to vendor immediately. Confidential deal."
+                    </div>
+                    <button class="challenge-button" onclick="checkAnswer('bec', 'fraud', 250)">Report Fraud</button>
+                </div>`
+            };
+            return stages[stage] || stages[1];
+        }
+
+        function getTreasureStageContent(stage) {
+            const stages = {
+                1: createTreasureSimulation(),
+                2: `<div style="background: #8B4513; color: white; padding: 20px; border-radius: 10px;">
+                    <h4>🗺️ Ancient Scroll 2: Atbash Cipher</h4>
+                    <div>Decode: GSRH RH Z HVXIVG (A=Z, B=Y, C=X...)</div>
+                    <input type="text" class="challenge-input" placeholder="Enter decoded message..." id="atbash">
+                    <button class="challenge-button" onclick="checkAnswer('atbash', 'THIS IS A SECRET', 200)">Decode</button>
+                </div>`,
+                3: `<div style="background: #8B4513; color: white; padding: 20px; border-radius: 10px;">
+                    <h4>🗺️ Enigma Machine Location 1</h4>
+                    <div>Rotor settings: I-II-III, Ring: AAA, Plugboard: AB CD EF</div>
+                    <div>Encrypted: QWERTY</div>
+                    <button class="challenge-button" onclick="checkAnswer('enigma1', 'solved', 300)">Decrypt Enigma</button>
+                </div>`
+            };
+            return stages[stage] || stages[1];
+        }
+
+        function getPasswordStageContent(stage) {
+            const stages = {
+                1: createPasswordSimulation(),
+                2: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🔍 Hash Analysis: MD5 Collision</h4>
+                    <div>Two different inputs with same MD5 hash detected!</div>
+                    <div style="background: #ff4757; color: white; padding: 15px; margin: 15px 0; border-radius: 8px;">
+                        Hash: 5d41402abc4b2a76b9719d911017c592<br>
+                        Input 1: "hello"<br>
+                        Input 2: ?
+                    </div>
+                    <button class="challenge-button" onclick="checkAnswer('collision', 'detected', 200)">Report Collision</button>
+                </div>`,
+                3: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🔍 Rainbow Table Defense</h4>
+                    <div>Implement salt to prevent rainbow table attacks:</div>
+                    <div>Password: "password123" + Salt: "a1b2c3"</div>
+                    <button class="challenge-button" onclick="checkAnswer('salt', 'protected', 250)">Apply Salt</button>
+                </div>`
+            };
+            return stages[stage] || stages[1];
+        }
+
+        function getRansomwareStageContent(stage) {
+            const stages = {
+                1: createRansomwareSimulation(),
+                2: `<div style="background: #ff4757; color: white; padding: 20px; border-radius: 10px;">
+                    <h4>🚨 Hospital Systems Compromised</h4>
+                    <div>Critical: Life support systems affected!</div>
+                    <div>Choose emergency protocol:</div>
+                    <button class="challenge-button" onclick="checkAnswer('hospital', 'backup_power', 300)" style="background: #27ae60; margin: 5px;">Switch to Backup Systems</button>
+                    <button class="challenge-button" onclick="checkAnswer('hospital', 'negotiate', 0)" style="background: #e74c3c; margin: 5px;">Negotiate with Hackers</button>
+                </div>`,
+                3: `<div style="background: #ff4757; color: white; padding: 20px; border-radius: 10px;">
+                    <h4>🚨 Power Grid Attack</h4>
+                    <div>Hydra ransomware targeting electrical infrastructure!</div>
+                    <div>Implement containment strategy:</div>
+                    <button class="challenge-button" onclick="checkAnswer('power', 'isolate_grid', 350)">Isolate Affected Grid Sections</button>
+                </div>`
+            };
+            return stages[stage] || stages[1];
+        }
+
+        function getNetworkStageContent(stage) {
+            const stages = {
+                1: createNetworkSimulation(),
+                2: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🌐 Packet Analysis: Suspicious Traffic</h4>
+                    <div style="background: #000; color: #00ff00; padding: 15px; font-family: monospace; border-radius: 8px;">
+                        TCP 192.168.1.100:1337 → 203.0.113.5:443<br>
+                        Payload: Base64 encoded data detected<br>
+                        Frequency: Every 60 seconds
+                    </div>
+                    <button class="challenge-button" onclick="checkAnswer('packet', 'c2_traffic', 200)">Identify C2 Traffic</button>
+                </div>`,
+                3: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>🌐 Zero-Day Exploit Chain</h4>
+                    <div>Trace the attack vector:</div>
+                    <div>1. Email attachment → 2. Buffer overflow → 3. Privilege escalation → 4. ?</div>
+                    <button class="challenge-button" onclick="checkAnswer('exploit', 'lateral_movement', 250)">Identify Next Stage</button>
+                </div>`
+            };
+            return stages[stage] || stages[1];
+        }
+
+        function getCloudStageContent(stage) {
+            const stages = {
+                1: createCloudSimulation(),
+                2: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>☁️ DNS Tunneling Detection</h4>
+                    <div style="background: #000; color: #fff; padding: 15px; font-family: monospace; border-radius: 8px;">
+                        DNS Query: a1b2c3d4e5f6.malicious-domain.com<br>
+                        Frequency: 847 queries/hour<br>
+                        Data size: Unusually large TXT records
+                    </div>
+                    <button class="challenge-button" onclick="checkAnswer('dns', 'tunneling', 300)">Block DNS Tunneling</button>
+                </div>`,
+                3: `<div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                    <h4>☁️ Steganography in Images</h4>
+                    <div>Suspicious image uploads detected in cloud storage:</div>
+                    <div>File: vacation_photo.jpg (2.3MB - unusually large for resolution)</div>
+                    <button class="challenge-button" onclick="checkAnswer('stego', 'hidden_data', 350)">Extract Hidden Data</button>
+                </div>`
+            };
+            return stages[stage] || stages[1];
+        }
+
+        // Generic answer checker for stage content
+        function checkAnswer(inputId, correctAnswer, points) {
+            let userAnswer = '';
+            
+            if (inputId === 'rsa' || inputId === 'signature' || inputId === 'stream' || inputId === 'spear' || inputId === 'bec' || 
+                inputId === 'enigma1' || inputId === 'collision' || inputId === 'salt' || inputId === 'hospital' || 
+                inputId === 'power' || inputId === 'packet' || inputId === 'exploit' || inputId === 'dns' || inputId === 'stego') {
+                userAnswer = correctAnswer; // For button-based answers
+            } else {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    userAnswer = input.value.toUpperCase().trim();
+                }
+            }
+            
+            if (userAnswer === correctAnswer.toUpperCase() || userAnswer === correctAnswer) {
+                showSuccess(`🎉 Stage ${gameState.currentStage} completed successfully!`, points);
+            } else {
+                showError("Not quite right. Try again!");
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('simulationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize progress animations on load
+        window.addEventListener('load', function() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        });
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes celebrationPulse {
+                0%, 100% { transform: translate(-50%, -50%) scale(1); }
+                50% { transform: translate(-50%, -50%) scale(1.1); }
+            }
+            
+            @keyframes levelUpBounce {
+                0%, 20%, 50%, 80%, 100% { transform: translate(-50%, -50%) translateY(0); }
+                40% { transform: translate(-50%, -50%) translateY(-20px); }
+                60% { transform: translate(-50%, -50%) translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'977235cdb2bf9095',t:'MTc1NjUzNTExOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
